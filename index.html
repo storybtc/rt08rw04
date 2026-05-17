@@ -404,7 +404,7 @@
                     rekapDiv.className = "grid grid-cols-12 items-center py-2 px-1 my-1 bg-emerald-400 text-[#0f5132] rounded-lg border border-emerald-500/30 font-bold shadow-sm text-center text-[10px] md:text-xs tracking-wide animate-fadeIn";
                     rekapDiv.innerHTML = `
                         <div class="col-span-3 text-left pl-2 font-black normal-case">AKUMULASI SALDO</div>
-                        <div class="col-span-5 text-left font-black normal-case">TOTAL SALDO BULAN${getNamaBulan(item.tanggal)}</div>
+                        <div class="col-span-5 text-left font-black normal-case">TOTAL SALDO BULAN ${getNamaBulan(item.tanggal)}</div>
                         <div class="col-span-3 text-right pr-4 text-sm md:text-xl font-black text-[#F8FAFC] [text-shadow:2px_2px_2px_#000000] normal-case">${formatRupiahRekap(runningSaldo)}</div>
                         <div class="col-span-1 text-center font-bold">✓</div>
                     `;
