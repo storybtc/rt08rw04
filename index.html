@@ -1,170 +1,202 @@
-<!DOCTYPE html> 
-<html lang="id"> 
-<head> 
-    <meta charset="UTF-8"> 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-    <title>RT.08 RW.04 - Laporan Kas Digital</title> 
-    <script src="https://cdn.tailwindcss.com"></script> 
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght=400;500;600;700;800&display=swap" rel="stylesheet"> 
-    <style> 
-        body { 
-            font-family: 'Plus Jakarta Sans', sans-serif; 
-            background-color: #f4f7f5; 
-            color: #1e293b; 
-            position: relative; 
-        } 
-        ::-webkit-scrollbar { width: 6px; } 
-        ::-webkit-scrollbar-track { background: #e2e8f0; } 
-        ::-webkit-scrollbar-thumb { background: #0f5132; border-radius: 3px; } 
-        ::-webkit-scrollbar-thumb:hover { background: #198754; } 
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RT.08 RW.04 - Laporan Kas Digital</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght=400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #f4f7f5;
+            color: #1e293b;
+            position: relative;
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #e2e8f0;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #0f5132;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #198754;
+        }
+        /* Gaya Khusus untuk Efek Salju Bergerak Lambat */
+        .snowflake {
+            position: fixed;
+            top: -20px;
+            color: rgba(255, 255, 255, 0.85);
+            text-shadow: 0 0 3px rgba(15, 81, 50, 0.2);
+            pointer-events: none;
+            z-index: 9999;
+            user-select: none;
+            animation-name: fall, sway;
+            animation-iteration-count: infinite, infinite;
+            animation-timing-function: linear, ease-in-out;
+        }
+        @keyframes fall {
+            0% { top: -20px; }
+            100% { top: 100vh; }
+        }
+        @keyframes sway {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(30px); }
+        }
+    </style>
+</head>
+<body class="min-h-screen py-6 px-4 md:px-8 flex justify-center items-start">
+
+    <div class="w-full max-w-6xl flex flex-col gap-4 relative z-10">
         
-        /* Gaya Khusus untuk Efek Salju Bergerak Lambat */ 
-        .snowflake { 
-            position: fixed; 
-            top: -20px; 
-            color: rgba(255, 255, 255, 0.85); 
-            text-shadow: 0 0 3px rgba(15, 81, 50, 0.2); 
-            pointer-events: none; 
-            z-index: 9999; 
-            user-select: none; 
-            animation-name: fall, sway; 
-            animation-iteration-count: infinite, infinite; 
-            animation-timing-function: linear, ease-in-out; 
-        } 
-        @keyframes fall { 0% { top: -20px; } 100% { top: 100vh; } } 
-        @keyframes sway { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(30px); } } 
-    </style> 
-</head> 
-<body class="min-h-screen py-6 px-4 md:px-8 flex justify-center items-start"> 
-    <div class="w-full max-w-6xl flex flex-col gap-4 relative z-10"> 
-        <div class="bg-[#0f5132] text-white text-center py-3.5 rounded-xl shadow-sm border border-[#0f5132]/20 px-4"> 
-            <h1 class="font-black text-xs md:text-base tracking-wider uppercase">LAPORAN KAS RT.08 RW.04, BAKALAN LOR</h1> 
-            <p class="text-[8px] md:text-[10px] text-emerald-300 font-black tracking-widest uppercase mt-0.5">LAPORAN KAS RT.08 DIGITAL SYSTEM</p> 
-        </div> 
-        
-        <div class="bg-gradient-to-br from-[#198754] to-[#0f5132] text-white text-center py-6 md:py-10 rounded-2xl shadow-md relative overflow-hidden border border-emerald-800/30"> 
-            <div class="absolute -right-10 -top-10 w-24 h-24 bg-white/10 rounded-full blur-2xl"></div> 
-            <div class="flex items-center justify-center gap-1.5 mb-1.5"> 
-                <span class="flex h-2 w-2 relative"> 
-                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-300 opacity-75"></span> 
-                    <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-300"></span> 
-                </span> 
-                <p class="text-[9px] md:text-[10px] text-emerald-300 font-black tracking-widest uppercase">SYSTEM ONLINE</p> 
-            </div> 
-            <p class="text-[10px] md:text-sm text-emerald-100 mb-1 font-black tracking-wide uppercase">SALDO KAS SAAT INI</p> 
-            <p id="total-saldo" class="text-4xl md:text-6xl font-black tracking-tight text-white drop-shadow-sm">Rp 0</p> 
-        </div> 
-        
-        <div class="grid grid-cols-2 gap-3"> 
-            <div class="bg-white border border-slate-200/80 p-4 rounded-2xl shadow-sm relative overflow-hidden"> 
-                <div class="absolute top-0 left-0 bottom-0 w-[4px] bg-emerald-600"></div> 
-                <p class="text-[9px] md:text-xs text-slate-500 font-black uppercase tracking-wider mb-0.5">Total Pemasukan</p> 
-                <p id="total-pemasukan" class="text-lg md:text-2xl font-black text-emerald-600">Rp 0</p> 
-            </div> 
-            <div class="bg-white border border-slate-200/80 p-4 rounded-2xl shadow-sm relative overflow-hidden"> 
-                <div class="absolute top-0 left-0 bottom-0 w-[4px] bg-rose-500"></div> 
-                <p class="text-[9px] md:text-xs text-slate-500 font-black uppercase tracking-wider mb-0.5">Total Pengeluaran</p> 
-                <p id="total-pengeluaran" class="text-lg md:text-2xl font-black text-rose-600">Rp 0</p> 
-            </div> 
-        </div> 
-        
-        <button onclick="checkAccess('add')" class="w-full bg-[#0f5132] hover:bg-[#146c43] text-white font-black py-3.5 rounded-xl transition duration-200 flex items-center justify-center gap-2 shadow-sm tracking-wide text-xs md:text-sm uppercase"> 
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-emerald-300" viewBox="0 0 20 20" fill="currentColor"> 
-                <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" /> 
-            </svg> Tambah Transaksi Baru 
-        </button> 
-        
-        <div class="bg-white border border-slate-200 rounded-2xl p-4 md:p-6 shadow-sm overflow-hidden"> 
-            <div class="flex justify-between items-center mb-4"> 
-                <h2 class="text-slate-800 font-black text-xs md:text-base tracking-wide uppercase border-b-2 border-[#0f5132] pb-0.5">LAPORAN MUTASI KAS RT 08</h2> 
-                <span id="loading-status" class="text-[9px] md:text-xs text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full font-black border border-emerald-100">Sinkron...</span> 
-            </div> 
-            <div class="overflow-x-auto"> 
-                <div class="min-w-[650px] md:min-w-full"> 
-                    <div class="grid grid-cols-12 text-[9px] md:text-xs font-black text-slate-700 uppercase border-b border-slate-200 pb-2 mb-2 tracking-wider bg-slate-100 p-2 rounded-lg text-center"> 
-                        <div class="col-span-2 text-left pl-1 border-r border-slate-200">Tanggal</div> 
-                        <div class="col-span-4 text-left px-2 border-r border-slate-200">Keterangan</div> 
-                        <div class="col-span-2 text-right pr-2 border-r border-slate-200">Masuk</div> 
-                        <div class="col-span-2 text-right pr-2 border-r border-slate-200">Keluar</div> 
-                        <div class="col-span-1 text-right pr-2 border-r border-slate-200">Saldo</div> 
-                        <div class="col-span-1">Aksi</div> 
-                    </div> 
-                    <div id="mutasi-list" class="flex flex-col gap-1 text-[11px] md:text-sm font-black"></div> 
-                </div> 
-            </div> 
-        </div> 
-        
-        <div class="text-center py-1"> 
-            <p class="text-[9px] md:text-xs font-black tracking-widest text-slate-400 uppercase">POWERED BY : MBS ID</p> 
-        </div> 
-    </div> 
+        <!-- Header -->
+        <div class="bg-[#0f5132] text-white text-center py-3.5 rounded-xl shadow-sm border border-[#0f5132]/20 px-4">
+            <h1 class="font-black text-xs md:text-base tracking-wider uppercase">LAPORAN KAS RT.08 RW.04, BAKALAN LOR</h1>
+            <p class="text-[8px] md:text-[10px] text-emerald-300 font-black tracking-widest uppercase mt-0.5">LAPORAN KAS RT.08 DIGITAL SYSTEM</p>
+        </div>
+
+        <!-- Utama: Saldo -->
+        <div class="bg-gradient-to-br from-[#198754] to-[#0f5132] text-white text-center py-6 md:py-10 rounded-2xl shadow-md relative overflow-hidden border border-emerald-800/30">
+            <div class="absolute -right-10 -top-10 w-24 h-24 bg-white/10 rounded-full blur-2xl"></div>
+            <div class="flex items-center justify-center gap-1.5 mb-1.5">
+                <span class="flex h-2 w-2 relative">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-300 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-300"></span>
+                </span>
+                <p class="text-[9px] md:text-[10px] text-emerald-300 font-black tracking-widest uppercase">SYSTEM ONLINE</p>
+            </div>
+            <p class="text-[10px] md:text-sm text-emerald-100 mb-1 font-black tracking-wide uppercase">SALDO KAS SAAT INI</p>
+            <p id="total-saldo" class="text-4xl md:text-6xl font-black tracking-tight text-white drop-shadow-sm">Rp 0</p>
+        </div>
+
+        <!-- Grid Aliran Dana -->
+        <div class="grid grid-cols-2 gap-3">
+            <div class="bg-white border border-slate-200/80 p-4 rounded-2xl shadow-sm relative overflow-hidden">
+                <div class="absolute top-0 left-0 bottom-0 w-[4px] bg-emerald-600"></div>
+                <p class="text-[9px] md:text-xs text-slate-500 font-black uppercase tracking-wider mb-0.5">Total Pemasukan</p>
+                <p id="total-pemasukan" class="text-lg md:text-2xl font-black text-emerald-600">Rp 0</p>
+            </div>
+            <div class="bg-white border border-slate-200/80 p-4 rounded-2xl shadow-sm relative overflow-hidden">
+                <div class="absolute top-0 left-0 bottom-0 w-[4px] bg-rose-500"></div>
+                <p class="text-[9px] md:text-xs text-slate-500 font-black uppercase tracking-wider mb-0.5">Total Pengeluaran</p>
+                <p id="total-pengeluaran" class="text-lg md:text-2xl font-black text-rose-600">Rp 0</p>
+            </div>
+        </div>
+
+        <!-- Tombol Aksi -->
+        <button onclick="checkAccess('add')" class="w-full bg-[#0f5132] hover:bg-[#146c43] text-white font-black py-3.5 rounded-xl transition duration-200 flex items-center justify-center gap-2 shadow-sm tracking-wide text-xs md:text-sm uppercase">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-emerald-300" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
+            </svg>
+            Tambah Transaksi Baru
+        </button>
+
+        <!-- Tabel Log Mutasi -->
+        <div class="bg-white border border-slate-200 rounded-2xl p-4 md:p-6 shadow-sm overflow-hidden">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-slate-800 font-black text-xs md:text-base tracking-wide uppercase border-b-2 border-[#0f5132] pb-0.5">LAPORAN MUTASI KAS RT 08</h2>
+                <span id="loading-status" class="text-[9px] md:text-xs text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full font-black border border-emerald-100">Sinkron...</span>
+            </div>
+
+            <div class="overflow-x-auto">
+                <div class="min-w-[650px] md:min-w-full">
+                    <div class="grid grid-cols-12 text-[9px] md:text-xs font-black text-slate-700 uppercase border-b border-slate-200 pb-2 mb-2 tracking-wider bg-slate-100 p-2 rounded-lg text-center">
+                        <div class="col-span-2 text-left pl-1 border-r border-slate-200">Tanggal</div>
+                        <div class="col-span-4 text-left px-2 border-r border-slate-200">Keterangan</div>
+                        <div class="col-span-2 text-right pr-2 border-r border-slate-200">Masuk</div>
+                        <div class="col-span-2 text-right pr-2 border-r border-slate-200">Keluar</div>
+                        <div class="col-span-1 text-right pr-2 border-r border-slate-200">Saldo</div>
+                        <div class="col-span-1">Aksi</div>
+                    </div>
+                    <div id="mutasi-list" class="flex flex-col gap-1 text-[11px] md:text-sm font-black"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="text-center py-1">
+            <p class="text-[9px] md:text-xs font-black tracking-widest text-slate-400 uppercase">POWERED BY : MBS ID</p>
+        </div>
+
+    </div>
 
     <!-- Modal Form -->
-    <div id="transaction-modal" class="hidden fixed inset-0 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4 z-50"> 
-        <div class="bg-white border border-slate-200 rounded-2xl w-full max-w-sm p-5 shadow-xl relative text-slate-800"> 
-            <h3 id="modal-title" class="text-[#0f5132] font-black text-sm uppercase mb-4">Tambah Transaksi</h3> 
-            <form id="transaction-form" onsubmit="handleFormSubmit(event)"> 
-                <input type="hidden" id="form-id"> 
-                <div class="flex flex-col gap-3.5"> 
-                    <div> 
-                        <label class="text-[9px] font-black text-slate-500 uppercase block mb-1">Tanggal Transaksi</label> 
-                        <input type="date" id="form-tanggal" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2 text-xs text-slate-800 font-black focus:outline-none focus:border-[#0f5132]" required> 
-                    </div> 
-                    <div> 
-                        <label class="text-[9px] font-black text-slate-500 uppercase block mb-1">Keterangan Transaksi</label> 
-                        <input type="text" id="form-keterangan" placeholder="Contoh: IURAN WARGA / BELI ATK" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2 text-xs text-slate-800 font-black focus:outline-none focus:border-[#0f5132]" required> 
-                    </div> 
-                    <div class="grid grid-cols-2 gap-2.5"> 
-                        <div> 
-                            <label class="text-[9px] font-black text-slate-500 uppercase block mb-1">Nominal Masuk (Rp)</label> 
-                            <input type="number" id="form-masuk" value="0" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2 text-xs text-slate-800 font-black focus:outline-none focus:border-[#0f5132]" required> 
-                        </div> 
-                        <div> 
-                            <label class="text-[9px] font-black text-slate-500 uppercase block mb-1">Nominal Keluar (Rp)</label> 
-                            <input type="number" id="form-keluar" value="0" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2 text-xs text-slate-800 font-black focus:outline-none focus:border-[#0f5132]" required> 
-                        </div> 
-                    </div> 
-                    <div> 
-                        <label class="text-[9px] font-black text-slate-500 uppercase block mb-1">Link URL Foto Nota (Opsional)</label> 
-                        <input type="url" id="form-nota" placeholder="https://drive.google.com/..." class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2 text-xs text-slate-800 font-black focus:outline-none focus:border-[#0f5132]"> 
-                    </div> 
-                </div> 
-                <div class="flex justify-end gap-2 mt-5"> 
-                    <button type="button" onclick="closeModal()" class="bg-slate-100 hover:bg-slate-200 text-slate-600 font-black px-4 py-2 rounded-xl text-xs">Batal</button> 
-                    <button type="submit" class="bg-[#0f5132] hover:bg-[#146c43] text-white font-black px-4 py-2 rounded-xl text-xs">Simpan Data</button> 
-                </div> 
-            </form> 
-        </div> 
-    </div> 
+    <div id="transaction-modal" class="hidden fixed inset-0 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+        <div class="bg-white border border-slate-200 rounded-2xl w-full max-w-sm p-5 shadow-xl relative text-slate-800">
+            <h3 id="modal-title" class="text-[#0f5132] font-black text-sm uppercase mb-4">Tambah Transaksi</h3>
+            
+            <form id="transaction-form" onsubmit="handleFormSubmit(event)">
+                <input type="hidden" id="form-id">
+                
+                <div class="flex flex-col gap-3.5">
+                    <div>
+                        <label class="text-[9px] font-black text-slate-500 uppercase block mb-1">Tanggal Transaksi</label>
+                        <input type="date" id="form-tanggal" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2 text-xs text-slate-800 font-black focus:outline-none focus:border-[#0f5132]" required>
+                    </div>
 
-    <script> 
-        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxEVJmHYhLlGSKqy8u5t6HusWdLMI-PJoidvoaEaWsB9f5GUrRvP47OyVIqSA3SfQSz/exec"; 
-        const SECURITY_PIN = "999"; 
-        let currentDatabase = []; 
+                    <div>
+                        <label class="text-[9px] font-black text-slate-500 uppercase block mb-1">Keterangan Transaksi</label>
+                        <input type="text" id="form-keterangan" placeholder="Contoh: IURAN WARGA / BELI ATK" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2 text-xs text-slate-800 font-black focus:outline-none focus:border-[#0f5132]" required>
+                    </div>
 
-        function formatRupiah(angka) { 
-            return "Rp " + new Intl.NumberFormat('id-ID').format(angka); 
-        } 
+                    <div class="grid grid-cols-2 gap-2.5">
+                        <div>
+                            <label class="text-[9px] font-black text-slate-500 uppercase block mb-1">Nominal Masuk (Rp)</label>
+                            <input type="number" id="form-masuk" value="0" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2 text-xs text-slate-800 font-black focus:outline-none focus:border-[#0f5132]" required>
+                        </div>
+                        <div>
+                            <label class="text-[9px] font-black text-slate-500 uppercase block mb-1">Nominal Keluar (Rp)</label>
+                            <input type="number" id="form-keluar" value="0" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2 text-xs text-slate-800 font-black focus:outline-none focus:border-[#0f5132]" required>
+                        </div>
+                    </div>
 
-        function convertDateToUI(dateString) { 
-            if (!dateString) return "-"; 
-            if (dateString.includes(" ") && isNaN(dateString)) { 
-                const parsedDate = new Date(dateString); 
-                if (!isNaN(parsedDate.getTime())) { 
-                    const dd = String(parsedDate.getDate()).padStart(2, '0'); 
-                    const mm = String(parsedDate.getMonth() + 1).padStart(2, '0'); 
-                    const yyyy = parsedDate.getFullYear(); 
-                    return `${dd}/${mm}/${yyyy}`; 
-                } 
-            } 
-            if (dateString.includes("-")) { 
-                const parts = dateString.split("T")[0].split("-"); 
-                if (parts.length === 3) { 
-                    return `${parts[2]}/${parts[1]}/${parts[0]}`; 
-                } 
-            } 
-            return dateString; 
-        } 
+                    <div>
+                        <label class="text-[9px] font-black text-slate-500 uppercase block mb-1">Link URL Foto Nota (Opsional)</label>
+                        <input type="url" id="form-nota" placeholder="https://drive.google.com/..." class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2 text-xs text-slate-800 font-black focus:outline-none focus:border-[#0f5132]">
+                    </div>
+                </div>
+
+                <div class="flex justify-end gap-2 mt-5">
+                    <button type="button" onclick="closeModal()" class="bg-slate-100 hover:bg-slate-200 text-slate-600 font-black px-4 py-2 rounded-xl text-xs">Batal</button>
+                    <button type="submit" class="bg-[#0f5132] hover:bg-[#146c43] text-white font-black px-4 py-2 rounded-xl text-xs">Simpan Data</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Sistem Kontrol Logic (JavaScript) -->
+    <script>
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxEVJmHYhLlGSKqy8u5t6HusWdLMI-PJoidvoaEaWsB9f5GUrRvP47OyVIqSA3SfQSz/exec";
+        const SECURITY_PIN = "999";
+        let currentDatabase = [];
+
+        function formatRupiah(angka) {
+            return "Rp " + new Intl.NumberFormat('id-ID').format(angka);
+        }
+
+        function convertDateToUI(dateString) {
+            if (!dateString) return "-";
+            if (dateString.includes(" ") && isNaN(dateString)) {
+                const parsedDate = new Date(dateString);
+                if (!isNaN(parsedDate.getTime())) {
+                    const dd = String(parsedDate.getDate()).padStart(2, '0');
+                    const mm = String(parsedDate.getMonth() + 1).padStart(2, '0');
+                    const yyyy = parsedDate.getFullYear();
+                    return `${dd}/${mm}/${yyyy}`;
+                }
+            }
+            if (dateString.includes("-")) {
+                const parts = dateString.split("T")[0].split("-");
+                if (parts.length === 3) {
+                    return `${parts[2]}/${parts[1]}/${parts[0]}`;
+                }
+            }
+            return dateString;
+        }
 
         function getNamaBulan(dateStr) {
             const date = new Date(dateStr);
@@ -172,239 +204,272 @@
             return !isNaN(date.getTime()) ? `${namaBulan[date.getMonth()]} ${date.getFullYear()}` : "-";
         }
 
-        function saveToLocalStorage() { 
-            localStorage.setItem("KAS_RT08_DATABASE", JSON.stringify(currentDatabase)); 
-        } 
+        function saveToLocalStorage() {
+            localStorage.setItem("KAS_RT08_DATABASE", JSON.stringify(currentDatabase));
+        }
 
-        function loadFromLocalStorage() { 
-            const localData = localStorage.getItem("KAS_RT08_DATABASE"); 
-            if (localData) { 
-                currentDatabase = JSON.parse(localData); 
-            } else { 
-                currentDatabase = [ { tanggal: "2026-05-17", keterangan: "SALDO KAS AWAL", masuk: 1000000, keluar: 0, nota: "" } ]; 
-                saveToLocalStorage(); 
-            } 
-        } 
+        function loadFromLocalStorage() {
+            const localData = localStorage.getItem("KAS_RT08_DATABASE");
+            if (localData) {
+                currentDatabase = JSON.parse(localData);
+            } else {
+                currentDatabase = [
+                    { tanggal: "2026-05-17", keterangan: "SALDO KAS AWAL", masuk: 1000000, keluar: 0, nota: "" }
+                ];
+                saveToLocalStorage();
+            }
+        }
 
-        function checkAccess(mode, index = null) { 
-            const inputPin = prompt("Masukkan PIN Pengurus untuk melanjutkan:"); 
-            if (inputPin === null) return; 
-            if (inputPin === SECURITY_PIN) { 
-                if (mode === 'add') { openModal(mode, index); } 
-                else if (mode === 'delete') { executeDelete(index); } 
-            } else { 
-                alert("⚠️ PIN Salah! Akses ditolak."); 
-            } 
-        } 
+        function checkAccess(mode, index = null) {
+            const inputPin = prompt("Masukkan PIN Pengurus untuk melanjutkan:");
+            if (inputPin === null) return;
+            if (inputPin === SECURITY_PIN) {
+                if (mode === 'add') {
+                    openModal(mode, index);
+                } else if (mode === 'delete') {
+                    executeDelete(index);
+                }
+            } else {
+                alert("⚠️ PIN Salah! Akses ditolak.");
+            }
+        }
 
-        function openModal(mode, index = null) { 
-            const modal = document.getElementById("transaction-modal"); 
-            const title = document.getElementById("modal-title"); 
-            const form = document.getElementById("transaction-form"); 
-            form.reset(); 
-            modal.classList.remove("hidden"); 
-            if (mode === 'add') { 
-                title.innerText = "Tambah Transaksi"; 
-                document.getElementById("form-id").value = ""; 
-                document.getElementById("form-masuk").value = "0"; 
-                document.getElementById("form-keluar").value = "0"; 
-                document.getElementById("form-tanggal").value = new Date().toISOString().split('T')[0]; 
-            } 
-        } 
+        function openModal(mode, index = null) {
+            const modal = document.getElementById("transaction-modal");
+            const title = document.getElementById("modal-title");
+            const form = document.getElementById("transaction-form");
+            form.reset();
+            modal.classList.remove("hidden");
 
-        function closeModal() { document.getElementById("transaction-modal").classList.add("hidden"); } 
+            if (mode === 'add') {
+                title.innerText = "Tambah Transaksi";
+                document.getElementById("form-id").value = "";
+                document.getElementById("form-masuk").value = "0";
+                document.getElementById("form-keluar").value = "0";
+                document.getElementById("form-tanggal").value = new Date().toISOString().split('T')[0];
+            }
+        }
 
-        function renderData(rows) { 
-            const container = document.getElementById("mutasi-list"); 
-            container.innerHTML = ""; 
-            let runningSaldo = 0; 
-            let totalMasuk = 0; 
-            let totalKeluar = 0; 
+        function closeModal() {
+            document.getElementById("transaction-modal").classList.add("hidden");
+        }
 
-            // Sorting agar urutan logis berdasar kronologi tanggal
-            rows.sort((a, b) => new Date(a.tanggal) - new Date(b.tanggal)); 
+        function renderData(rows) {
+            const container = document.getElementById("mutasi-list");
+            container.innerHTML = "";
+            
+            let runningSaldo = 0;
+            let totalMasuk = 0;
+            let totalKeluar = 0;
 
-            rows.forEach((item, index) => { 
-                const masuk = parseInt(item.masuk) || 0; 
-                const keluar = parseInt(item.keluar) || 0; 
-                totalMasuk += masuk; 
-                totalKeluar += keluar; 
-                runningSaldo += (masuk - keluar); 
+            rows.sort((a, b) => new Date(a.tanggal) - new Date(b.tanggal));
 
-                const rowDiv = document.createElement("div"); 
-                rowDiv.className = `grid grid-cols-12 items-center py-2.5 border-b border-slate-100 hover:bg-emerald-50/30 transition font-black ${index % 2 === 0 ? 'bg-white' : 'bg-slate-50/50'}`; 
+            rows.forEach((item, index) => {
+                const masuk = parseInt(item.masuk) || 0;
+                const keluar = parseInt(item.keluar) || 0;
+                
+                totalMasuk += masuk;
+                totalKeluar += keluar;
+                runningSaldo += (masuk - keluar);
 
-                // Kolom 1: TANGGAL 
-                const colTanggal = document.createElement("div"); 
-                colTanggal.className = "col-span-2 text-left pl-1 text-slate-500 font-black tracking-wide text-[10px] md:text-sm"; 
-                colTanggal.innerText = convertDateToUI(item.tanggal); 
+                const rowDiv = document.createElement("div");
+                rowDiv.className = `grid grid-cols-12 items-center py-2.5 border-b border-slate-100 hover:bg-emerald-50/30 transition font-black ${index % 2 === 0 ? 'bg-white' : 'bg-slate-50/50'}`;
 
-                // Kolom 2: KETERANGAN 
-                let notaHtml = ""; 
-                if (item.nota && item.nota.trim() !== "") { 
-                    notaHtml = `<br><a href="${item.nota}" target="_blank" class="text-[9px] md:text-[11px] text-emerald-600 font-black hover:underline inline-block mt-0.5 tracking-wide">Lihat Foto Nota</a>`; 
-                } 
-                const colKet = document.createElement("div"); 
-                colKet.className = "col-span-4 px-1 break-words text-slate-700 uppercase leading-snug text-[11px] md:text-sm font-black"; 
-                colKet.innerHTML = `<span>${item.keterangan}</span>${notaHtml}`; 
+                const colTanggal = document.createElement("div");
+                colTanggal.className = "col-span-2 text-left pl-1 text-slate-500 font-black tracking-wide text-[10px] md:text-sm";
+                colTanggal.innerText = convertDateToUI(item.tanggal);
 
-                // Kolom 3: MASUK 
-                const colMasuk = document.createElement("div"); 
-                colMasuk.className = "col-span-2 text-right text-emerald-600 pr-1 text-[11px] md:text-sm font-black"; 
-                colMasuk.innerText = masuk > 0 ? formatRupiah(masuk).replace("Rp ", "") : "-"; 
+                let notaHtml = "";
+                if (item.nota && item.nota.trim() !== "") {
+                    notaHtml = `<br><a href="${item.nota}" target="_blank" class="text-[9px] md:text-[11px] text-emerald-600 font-black hover:underline inline-block mt-0.5 tracking-wide">Lihat Foto Nota</a>`;
+                }
 
-                // Kolom 4: KELUAR 
-                const colKeluar = document.createElement("div"); 
-                colKeluar.className = "col-span-2 text-right text-rose-600 pr-1 text-[11px] md:text-sm font-black"; 
-                colKeluar.innerText = keluar > 0 ? formatRupiah(keluar).replace("Rp ", "") : "-"; 
+                const colKet = document.createElement("div");
+                colKet.className = "col-span-4 px-1 break-words text-slate-700 uppercase leading-snug text-[11px] md:text-sm font-black";
+                colKet.innerHTML = `<span>${item.keterangan}</span>${notaHtml}`;
 
-                // Kolom 5: SALDO 
-                const colSaldo = document.createElement("div"); 
-                colSaldo.className = "col-span-1 text-right text-slate-800 pr-1 text-[11px] md:text-sm font-black"; 
-                colSaldo.innerText = formatRupiah(runningSaldo).replace("Rp ", ""); 
+                const colMasuk = document.createElement("div");
+                colMasuk.className = "col-span-2 text-right text-emerald-600 pr-1 text-[11px] md:text-sm font-black";
+                colMasuk.innerText = masuk > 0 ? formatRupiah(masuk).replace("Rp ", "") : "-";
 
-                // Kolom 6: AKSI 
-                const colAksi = document.createElement("div"); 
-                colAksi.className = "col-span-1 flex justify-center"; 
-                colAksi.innerHTML = ` 
-                    <button onclick="checkAccess('delete', ${index})" class="text-rose-500 hover:text-rose-600 transition p-1" title="Hapus"> 
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 md:h-4 md:w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg> 
-                    </button> `; 
+                const colKeluar = document.createElement("div");
+                colKeluar.className = "col-span-2 text-right text-rose-600 pr-1 text-[11px] md:text-sm font-black";
+                colKeluar.innerText = keluar > 0 ? formatRupiah(keluar).replace("Rp ", "") : "-";
 
-                rowDiv.appendChild(colTanggal); 
-                rowDiv.appendChild(colKet); 
-                rowDiv.appendChild(colMasuk); 
-                rowDiv.appendChild(colKeluar); 
-                rowDiv.appendChild(colSaldo); 
-                rowDiv.appendChild(colAksi); 
-                container.appendChild(rowDiv); 
+                const colSaldo = document.createElement("div");
+                colSaldo.className = "col-span-1 text-right text-slate-800 pr-1 text-[11px] md:text-sm font-black";
+                colSaldo.innerText = formatRupiah(runningSaldo).replace("Rp ", "");
 
-                // Cek apakah item ini merupakan transaksi terakhir di bulan bersangkutan
-                let isEndOfMonth = false; 
-                if (index === rows.length - 1) { 
-                    isEndOfMonth = true; 
-                } else { 
-                    const currentTxDate = new Date(item.tanggal); 
-                    const nextTxDate = new Date(rows[index + 1].tanggal); 
-                    if (currentTxDate.getMonth() !== nextTxDate.getMonth() || currentTxDate.getFullYear() !== nextTxDate.getFullYear()) { 
-                        isEndOfMonth = true; 
-                    } 
-                } 
+                const colAksi = document.createElement("div");
+                colAksi.className = "col-span-1 flex justify-center";
+                colAksi.innerHTML = `
+                    <button onclick="checkAccess('delete', ${index})" class="text-rose-500 hover:text-rose-600 transition p-1" title="Hapus">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 md:h-4 md:w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                    </button>
+                `;
 
-                // Jika terdeteksi akhir bulan, cetak baris total rekap saldo bulanan (Blok Hijau Terang)
-                if (isEndOfMonth) { 
-                    const rekapDiv = document.createElement("div"); 
-                    rekapDiv.className = "grid grid-cols-12 items-center py-2 px-1 my-1 bg-emerald-400 text-[#0f5132] rounded-lg border border-emerald-500/30 font-black shadow-sm text-center text-[10px] md:text-xs tracking-wide uppercase animate-fadeIn"; 
-                    
+                rowDiv.appendChild(colTanggal);
+                rowDiv.appendChild(colKet);
+                rowDiv.appendChild(colMasuk);
+                rowDiv.appendChild(colKeluar);
+                rowDiv.appendChild(colSaldo);
+                rowDiv.appendChild(colAksi);
+                container.appendChild(rowDiv);
+
+                let isEndOfMonth = false;
+                if (index === rows.length - 1) {
+                    isEndOfMonth = true;
+                } else {
+                    const currentTxDate = new Date(item.tanggal);
+                    const nextTxDate = new Date(rows[index + 1].tanggal);
+                    if (currentTxDate.getMonth() !== nextTxDate.getMonth() || currentTxDate.getFullYear() !== nextTxDate.getFullYear()) {
+                        isEndOfMonth = true;
+                    }
+                }
+
+                if (isEndOfMonth) {
+                    const rekapDiv = document.createElement("div");
+                    rekapDiv.className = "grid grid-cols-12 items-center py-2 px-1 my-1 bg-emerald-400 text-[#0f5132] rounded-lg border border-emerald-500/30 font-black shadow-sm text-center text-[10px] md:text-xs tracking-wide uppercase animate-fadeIn";
                     rekapDiv.innerHTML = `
                         <div class="col-span-3 text-left pl-2">AKUMULASI SALDO</div>
                         <div class="col-span-5 text-left font-extrabold">TOTAL SALDO AKHIR ${getNamaBulan(item.tanggal)}</div>
                         <div class="col-span-3 text-right pr-4 text-xs md:text-sm font-black">${formatRupiah(runningSaldo)}</div>
                         <div class="col-span-1 text-center font-bold">✓</div>
                     `;
-                    container.appendChild(rekapDiv); 
-                } 
-            }); 
+                    container.appendChild(rekapDiv);
+                }
+            });
 
-            document.getElementById("total-saldo").innerText = formatRupiah(runningSaldo); 
-            document.getElementById("total-pemasukan").innerText = formatRupiah(totalMasuk); 
-            document.getElementById("total-pengeluaran").innerText = formatRupiah(totalKeluar); 
-        } 
+            document.getElementById("total-saldo").innerText = formatRupiah(runningSaldo);
+            document.getElementById("total-pemasukan").innerText = formatRupiah(totalMasuk);
+            document.getElementById("total-pengeluaran").innerText = formatRupiah(totalKeluar);
+        }
 
-        async function fetchLiveKasData() { 
-            const statusBadge = document.getElementById("loading-status"); 
-            statusBadge.innerText = "Sinkronisasi..."; 
-            statusBadge.className = "text-[10px] text-amber-600 bg-amber-50 px-2 py-0.5 rounded-full animate-pulse border border-amber-200 font-black"; 
-            if (!WEB_APP_URL || WEB_APP_URL.includes("ISI_DENGAN_URL")) { 
-                renderData(currentDatabase); 
-                statusBadge.innerText = "Lokal Terproteksi"; 
-                statusBadge.className = "text-[10px] text-slate-500 bg-slate-100 px-2 py-0.5 rounded-full border border-slate-200 font-black"; 
-                return; 
-            } 
-            try { 
-                const antiCacheUrl = `${WEB_APP_URL}?_cb=${new Date().getTime()}`; 
-                const response = await fetch(antiCacheUrl); 
-                const data = await response.json(); 
-                currentDatabase = data; 
-                saveToLocalStorage(); 
-                renderData(currentDatabase); 
-                statusBadge.innerText = "Terupdate"; 
-                statusBadge.className = "text-[10px] text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200 font-black"; 
-            } catch (error) { 
-                console.error("Gagal sinkronisasi cloud, memuat cadangan lokal."); 
-                renderData(currentDatabase); 
-                statusBadge.innerText = "Offline (Lokal)"; 
-                statusBadge.className = "text-[10px] text-rose-600 bg-rose-50 px-2 py-0.5 rounded-full border border-rose-200 font-black"; 
-            } 
-        } 
+        async function fetchLiveKasData() {
+            const statusBadge = document.getElementById("loading-status");
+            statusBadge.innerText = "Sinkronisasi...";
+            statusBadge.className = "text-[10px] text-amber-600 bg-amber-50 px-2 py-0.5 rounded-full animate-pulse border border-amber-200 font-black";
 
-        async function handleFormSubmit(e) { 
-            e.preventDefault(); 
-            const payload = { 
-                action: "CREATE", 
-                rowIndex: null, 
-                tanggal: document.getElementById("form-tanggal").value, 
-                keterangan: document.getElementById("form-keterangan").value, 
-                masuk: parseInt(document.getElementById("form-masuk").value) || 0, 
-                keluar: parseInt(document.getElementById("form-keluar").value) || 0, 
-                nota: document.getElementById("form-nota").value 
-            }; 
-            closeModal(); 
-            const statusBadge = document.getElementById("loading-status"); 
-            statusBadge.innerText = "Menyimpan..."; 
-            currentDatabase.push({ tanggal: payload.tanggal, keterangan: payload.keterangan, masuk: payload.masuk, keluar: payload.keluar, nota: payload.nota }); 
-            saveToLocalStorage(); 
-            renderData(currentDatabase); 
-            if (!WEB_APP_URL || WEB_APP_URL.includes("ISI_DENGAN_URL")) { 
-                statusBadge.innerText = "Terupdate"; 
-                return; 
-            } 
-            try { 
-                await fetch(WEB_APP_URL, { method: "POST", headers: { "Content-Type": "text/plain" }, body: JSON.stringify(payload) }); 
-                setTimeout(fetchLiveKasData, 800); 
-            } catch (error) { setTimeout(fetchLiveKasData, 1000); } 
-        } 
+            if (!WEB_APP_URL || WEB_APP_URL.includes("ISI_DENGAN_URL")) {
+                renderData(currentDatabase);
+                statusBadge.innerText = "Lokal Terproteksi";
+                statusBadge.className = "text-[10px] text-slate-500 bg-slate-100 px-2 py-0.5 rounded-full border border-slate-200 font-black";
+                return;
+            }
 
-        async function executeDelete(index) { 
-            if (!confirm(`Hapus transaksi: "${currentDatabase[index].keterangan}"?`)) return; 
-            const statusBadge = document.getElementById("loading-status"); 
-            statusBadge.innerText = "Menghapus..."; 
-            currentDatabase.splice(index, 1); 
-            saveToLocalStorage(); 
-            renderData(currentDatabase); 
-            if (!WEB_APP_URL || WEB_APP_URL.includes("ISI_DENGAN_URL")) { 
-                statusBadge.innerText = "Terupdate"; 
-                return; 
-            } 
-            try { 
-                await fetch(WEB_APP_URL, { method: "POST", headers: { "Content-Type": "text/plain" }, body: JSON.stringify({ action: "DELETE", rowIndex: index }) }); 
-                setTimeout(fetchLiveKasData, 800); 
-            } catch (error) { setTimeout(fetchLiveKasData, 1000); } 
-        } 
+            try {
+                const antiCacheUrl = `${WEB_APP_URL}?_cb=${new Date().getTime()}`;
+                const response = await fetch(antiCacheUrl);
+                const data = await response.json();
+                currentDatabase = data;
+                saveToLocalStorage();
+                renderData(currentDatabase);
+                statusBadge.innerText = "Terupdate";
+                statusBadge.className = "text-[10px] text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200 font-black";
+            } catch (error) {
+                console.error("Gagal sinkronisasi cloud, memuat cadangan lokal.");
+                renderData(currentDatabase);
+                statusBadge.innerText = "Offline (Lokal)";
+                statusBadge.className = "text-[10px] text-rose-600 bg-rose-50 px-2 py-0.5 rounded-full border border-rose-200 font-black";
+            }
+        }
 
-        function createSnowflakes() { 
-            const snowflakeCount = 22; 
-            const flakes = ['❄', '❅', '❆']; 
-            for (let i = 0; i < snowflakeCount; i++) { 
-                const flake = document.createElement('div'); 
-                flake.className = 'snowflake'; 
-                flake.innerText = flakes[Math.floor(Math.random() * flakes.length)]; 
-                flake.style.left = Math.random() * 100 + 'vw'; 
-                flake.style.fontSize = (Math.random() * 10 + 10) + 'px'; 
-                const fallDuration = (Math.random() * 10 + 12) + 's'; 
-                const swayDuration = (Math.random() * 3 + 3) + 's'; 
-                flake.style.animationDuration = `${fallDuration}, ${swayDuration}`; 
-                const delay = Math.random() * 12 + 's'; 
-                flake.style.animationDelay = `${delay}, ${delay}`; 
-                document.body.appendChild(flake); 
-            } 
-        } 
+        async function handleFormSubmit(e) {
+            e.preventDefault();
+            const payload = {
+                action: "CREATE",
+                rowIndex: null,
+                tanggal: document.getElementById("form-tanggal").value,
+                keterangan: document.getElementById("form-keterangan").value,
+                masuk: parseInt(document.getElementById("form-masuk").value) || 0,
+                keluar: parseInt(document.getElementById("form-keluar").value) || 0,
+                nota: document.getElementById("form-nota").value
+            };
 
-        window.addEventListener("DOMContentLoaded", () => { 
-            loadFromLocalStorage(); 
-            fetchLiveKasData(); 
-            createSnowflakes(); 
-        }); 
-    </script> 
-</body> 
+            closeModal();
+            const statusBadge = document.getElementById("loading-status");
+            statusBadge.innerText = "Menyimpan...";
+
+            currentDatabase.push({
+                tanggal: payload.tanggal,
+                keterangan: payload.keterangan,
+                masuk: payload.masuk,
+                keluar: payload.keluar,
+                nota: payload.nota
+            });
+            saveToLocalStorage();
+            renderData(currentDatabase);
+
+            if (!WEB_APP_URL || WEB_APP_URL.includes("ISI_DENGAN_URL")) {
+                statusBadge.innerText = "Terupdate";
+                return;
+            }
+
+            try {
+                await fetch(WEB_APP_URL, {
+                    method: "POST",
+                    headers: { "Content-Type": "text/plain" },
+                    body: JSON.stringify(payload)
+                });
+                setTimeout(fetchLiveKasData, 800);
+            } catch (error) {
+                setTimeout(fetchLiveKasData, 1000);
+            }
+        }
+
+        async function executeDelete(index) {
+            if (!confirm(`Hapus transaksi: "${currentDatabase[index].keterangan}"?`)) return;
+
+            const statusBadge = document.getElementById("loading-status");
+            statusBadge.innerText = "Menghapus...";
+
+            currentDatabase.splice(index, 1);
+            saveToLocalStorage();
+            renderData(currentDatabase);
+
+            if (!WEB_APP_URL || WEB_APP_URL.includes("ISI_DENGAN_URL")) {
+                statusBadge.innerText = "Terupdate";
+                return;
+            }
+
+            try {
+                await fetch(WEB_APP_URL, {
+                    method: "POST",
+                    headers: { "Content-Type": "text/plain" },
+                    body: JSON.stringify({ action: "DELETE", rowIndex: index })
+                });
+                setTimeout(fetchLiveKasData, 800);
+            } catch (error) {
+                setTimeout(fetchLiveKasData, 1000);
+            }
+        }
+
+        function createSnowflakes() {
+            const snowflakeCount = 22;
+            const flakes = ['❄', '❅', '❆'];
+            for (let i = 0; i < snowflakeCount; i++) {
+                const flake = document.createElement('div');
+                flake.className = 'snowflake';
+                flake.innerText = flakes[Math.floor(Math.random() * flakes.length)];
+                flake.style.left = Math.random() * 100 + 'vw';
+                flake.style.fontSize = (Math.random() * 10 + 10) + 'px';
+                
+                const fallDuration = (Math.random() * 10 + 12) + 's';
+                const swayDuration = (Math.random() * 3 + 3) + 's';
+                flake.style.animationDuration = `${fallDuration}, ${swayDuration}`;
+                
+                const delay = Math.random() * 12 + 's';
+                flake.style.animationDelay = `${delay}, ${delay}`;
+                
+                document.body.appendChild(flake);
+            }
+        }
+
+        window.addEventListener("DOMContentLoaded", () => {
+            loadFromLocalStorage();
+            fetchLiveKasData();
+            createSnowflakes();
+        });
+    </script>
+</body>
 </html>
