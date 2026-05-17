@@ -17,21 +17,21 @@
             width: 6px;
         }
         ::-webkit-scrollbar-track {
-            background: #e2e8f0;
+            background: #1b723f;
         }
         ::-webkit-scrollbar-thumb {
-            background: #0f5132;
+            background: #1b723f;
             border-radius: 3px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: #198754;
+            background: #0d4722;
         }
         /* Gaya Khusus untuk Efek Salju Bergerak Lambat */
         .snowflake {
             position: fixed;
             top: -20px;
             color: rgba(255, 255, 255, 0.85);
-            text-shadow: 0 0 3px rgba(15, 81, 50, 0.2);
+            text-shadow: 0 0 3px rgba(13, 71, 34, 0.2);
             pointer-events: none;
             z-index: 9999;
             user-select: none;
@@ -53,21 +53,21 @@
 
     <div class="w-full max-w-6xl flex flex-col gap-4 relative z-10">
         
-        <!-- Header -->
-        <div class="bg-[#0f5132] text-white text-center py-3.5 rounded-xl shadow-sm border border-[#0f5132]/20 px-4">
+        <!-- Header - Gradasi 3 Warna (Lebih Gelap & Teduh) -->
+        <div class="bg-gradient-to-r from-[#0d4722] via-[#1b723f] to-[#25a25a] text-white text-center py-3.5 rounded-xl shadow-sm border border-[#1b723f]/20 px-4">
             <h1 class="font-black text-xs md:text-base tracking-wider uppercase">LAPORAN KAS RT.08 RW.04, BAKALAN LOR</h1>
-            <p class="text-[8px] md:text-[10px] text-emerald-300 font-black tracking-widest uppercase mt-0.5">LAPORAN KAS RT.08 DIGITAL SYSTEM</p>
+            <p class="text-[8px] md:text-[10px] text-emerald-200 font-black tracking-widest uppercase mt-0.5">LAPORAN KAS RT.08 DIGITAL SYSTEM</p>
         </div>
 
-        <!-- Utama: Saldo -->
-        <div class="bg-gradient-to-br from-[#198754] to-[#0f5132] text-white text-center py-6 md:py-10 rounded-2xl shadow-md relative overflow-hidden border border-emerald-800/30">
+        <!-- Utama: Saldo - Gradasi 3 Warna (Lebih Gelap & Teduh) -->
+        <div class="bg-gradient-to-br from-[#0d4722] via-[#1b723f] to-[#25a25a] text-white text-center py-6 md:py-10 rounded-2xl shadow-md relative overflow-hidden border border-emerald-900/20">
             <div class="absolute -right-10 -top-10 w-24 h-24 bg-white/10 rounded-full blur-2xl"></div>
             <div class="flex items-center justify-center gap-1.5 mb-1.5">
                 <span class="flex h-2 w-2 relative">
                     <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-300 opacity-75"></span>
                     <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-300"></span>
                 </span>
-                <p class="text-[9px] md:text-[10px] text-emerald-300 font-black tracking-widest uppercase">SYSTEM ONLINE</p>
+                <p class="text-[9px] md:text-[10px] text-emerald-200 font-black tracking-widest uppercase">SYSTEM ONLINE</p>
             </div>
             <p class="text-[10px] md:text-sm text-emerald-100 mb-1 font-black tracking-wide uppercase">SALDO KAS SAAT INI</p>
             <p id="total-saldo" class="text-4xl md:text-6xl font-black tracking-tight text-white drop-shadow-sm">Rp 0</p>
@@ -76,9 +76,9 @@
         <!-- Grid Aliran Dana -->
         <div class="grid grid-cols-2 gap-3">
             <div class="bg-white border border-slate-200/80 p-4 rounded-2xl shadow-sm relative overflow-hidden">
-                <div class="absolute top-0 left-0 bottom-0 w-[4px] bg-emerald-600"></div>
+                <div class="absolute top-0 left-0 bottom-0 w-[4px] bg-[#1b723f]"></div>
                 <p class="text-[9px] md:text-xs text-slate-500 font-black uppercase tracking-wider mb-0.5">Total Pemasukan</p>
-                <p id="total-pemasukan" class="text-lg md:text-2xl font-black text-emerald-600">Rp 0</p>
+                <p id="total-pemasukan" class="text-lg md:text-2xl font-black text-[#0d4722]">Rp 0</p>
             </div>
             <div class="bg-white border border-slate-200/80 p-4 rounded-2xl shadow-sm relative overflow-hidden">
                 <div class="absolute top-0 left-0 bottom-0 w-[4px] bg-rose-500"></div>
@@ -87,9 +87,9 @@
             </div>
         </div>
 
-        <!-- Tombol Aksi -->
-        <button onclick="checkAccess('add')" class="w-full bg-[#0f5132] hover:bg-[#146c43] text-white font-black py-3.5 rounded-xl transition duration-200 flex items-center justify-center gap-2 shadow-sm tracking-wide text-xs md:text-sm uppercase">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-emerald-300" viewBox="0 0 20 20" fill="currentColor">
+        <!-- Tombol Aksi - Selaras Maskulin -->
+        <button onclick="checkAccess('add')" class="w-full bg-gradient-to-r from-[#1b723f] to-[#0d4722] hover:from-[#0d4722] hover:to-[#082d15] text-white font-black py-3.5 rounded-xl transition duration-300 flex items-center justify-center gap-2 shadow-sm tracking-wide text-xs md:text-sm uppercase">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-emerald-200" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
             </svg>
             Tambah Transaksi Baru
@@ -98,8 +98,8 @@
         <!-- Tabel Log Mutasi -->
         <div class="bg-white border border-slate-200 rounded-2xl p-4 md:p-6 shadow-sm overflow-hidden">
             <div class="flex justify-between items-center mb-4">
-                <h2 class="text-slate-800 font-black text-xs md:text-base tracking-wide uppercase border-b-2 border-[#0f5132] pb-0.5">LAPORAN MUTASI KAS RT 08</h2>
-                <span id="loading-status" class="text-[9px] md:text-xs text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full font-black border border-emerald-100">Sinkron...</span>
+                <h2 class="text-slate-800 font-black text-xs md:text-base tracking-wide uppercase border-b-2 border-[#1b723f] pb-0.5">LAPORAN MUTASI KAS RT 08</h2>
+                <span id="loading-status" class="text-[9px] md:text-xs text-emerald-800 bg-emerald-50 px-2.5 py-1 rounded-full font-black border border-emerald-100">Sinkron...</span>
             </div>
 
             <div class="overflow-x-auto">
@@ -127,7 +127,7 @@
     <!-- Modal Form -->
     <div id="transaction-modal" class="hidden fixed inset-0 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4 z-50">
         <div class="bg-white border border-slate-200 rounded-2xl w-full max-w-sm p-5 shadow-xl relative text-slate-800">
-            <h3 id="modal-title" class="text-[#0f5132] font-black text-sm uppercase mb-4">Tambah Transaksi</h3>
+            <h3 id="modal-title" class="text-[#1b723f] font-black text-sm uppercase mb-4">Tambah Transaksi</h3>
             
             <form id="transaction-form" onsubmit="handleFormSubmit(event)">
                 <input type="hidden" id="form-id">
@@ -135,34 +135,34 @@
                 <div class="flex flex-col gap-3.5">
                     <div>
                         <label class="text-[9px] font-black text-slate-500 uppercase block mb-1">Tanggal Transaksi</label>
-                        <input type="date" id="form-tanggal" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2 text-xs text-slate-800 font-black focus:outline-none focus:border-[#0f5132]" required>
+                        <input type="date" id="form-tanggal" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2 text-xs text-slate-800 font-black focus:outline-none focus:border-[#1b723f]" required>
                     </div>
 
                     <div>
                         <label class="text-[9px] font-black text-slate-500 uppercase block mb-1">Keterangan Transaksi</label>
-                        <input type="text" id="form-keterangan" placeholder="Contoh: IURAN WARGA / BELI ATK" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2 text-xs text-slate-800 font-black focus:outline-none focus:border-[#0f5132]" required>
+                        <input type="text" id="form-keterangan" placeholder="Contoh: JIMPITAN WARGA / BELI ATK" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2 text-xs text-slate-800 font-black focus:outline-none focus:border-[#1b723f]" required>
                     </div>
 
                     <div class="grid grid-cols-2 gap-2.5">
                         <div>
                             <label class="text-[9px] font-black text-slate-500 uppercase block mb-1">Nominal Masuk (Rp)</label>
-                            <input type="number" id="form-masuk" value="0" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2 text-xs text-slate-800 font-black focus:outline-none focus:border-[#0f5132]" required>
+                            <input type="number" id="form-masuk" value="0" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2 text-xs text-slate-800 font-black focus:outline-none focus:border-[#1b723f]" required>
                         </div>
                         <div>
                             <label class="text-[9px] font-black text-slate-500 uppercase block mb-1">Nominal Keluar (Rp)</label>
-                            <input type="number" id="form-keluar" value="0" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2 text-xs text-slate-800 font-black focus:outline-none focus:border-[#0f5132]" required>
+                            <input type="number" id="form-keluar" value="0" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2 text-xs text-slate-800 font-black focus:outline-none focus:border-[#1b723f]" required>
                         </div>
                     </div>
 
                     <div>
                         <label class="text-[9px] font-black text-slate-500 uppercase block mb-1">Link URL Foto Nota (Opsional)</label>
-                        <input type="url" id="form-nota" placeholder="https://drive.google.com/..." class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2 text-xs text-slate-800 font-black focus:outline-none focus:border-[#0f5132]">
+                        <input type="url" id="form-nota" placeholder="https://drive.google.com/..." class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2 text-xs text-slate-800 font-black focus:outline-none focus:border-[#1b723f]">
                     </div>
                 </div>
 
                 <div class="flex justify-end gap-2 mt-5">
                     <button type="button" onclick="closeModal()" class="bg-slate-100 hover:bg-slate-200 text-slate-600 font-black px-4 py-2 rounded-xl text-xs">Batal</button>
-                    <button type="submit" class="bg-[#0f5132] hover:bg-[#146c43] text-white font-black px-4 py-2 rounded-xl text-xs">Simpan Data</button>
+                    <button type="submit" class="bg-gradient-to-r from-[#1b723f] to-[#0d4722] hover:from-[#0d4722] hover:to-[#082d15] text-white font-black px-4 py-2 rounded-xl text-xs">Simpan Data</button>
                 </div>
             </form>
         </div>
@@ -281,7 +281,7 @@
 
                 let notaHtml = "";
                 if (item.nota && item.nota.trim() !== "") {
-                    notaHtml = `<br><a href="${item.nota}" target="_blank" class="text-[9px] md:text-[11px] text-emerald-600 font-black hover:underline inline-block mt-0.5 tracking-wide">Lihat Foto Nota</a>`;
+                    notaHtml = `<br><a href="${item.nota}" target="_blank" class="text-[9px] md:text-[11px] text-[#0d4722] font-black hover:underline inline-block mt-0.5 tracking-wide">Lihat Foto Nota</a>`;
                 }
 
                 const colKet = document.createElement("div");
@@ -289,7 +289,7 @@
                 colKet.innerHTML = `<span>${item.keterangan}</span>${notaHtml}`;
 
                 const colMasuk = document.createElement("div");
-                colMasuk.className = "col-span-2 text-right text-emerald-600 pr-1 text-[11px] md:text-sm font-black";
+                colMasuk.className = "col-span-2 text-right text-[#1b723f] pr-1 text-[11px] md:text-sm font-black";
                 colMasuk.innerText = masuk > 0 ? formatRupiah(masuk).replace("Rp ", "") : "-";
 
                 const colKeluar = document.createElement("div");
@@ -327,6 +327,7 @@
                     }
                 }
 
+                // Bagian Akumulasi Saldo Menggunakan Hijau Terang Sesuai Permintaan
                 if (isEndOfMonth) {
                     const rekapDiv = document.createElement("div");
                     rekapDiv.className = "grid grid-cols-12 items-center py-2 px-1 my-1 bg-emerald-400 text-[#0f5132] rounded-lg border border-emerald-500/30 font-black shadow-sm text-center text-[10px] md:text-xs tracking-wide uppercase animate-fadeIn";
@@ -365,7 +366,7 @@
                 saveToLocalStorage();
                 renderData(currentDatabase);
                 statusBadge.innerText = "Terupdate";
-                statusBadge.className = "text-[10px] text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200 font-black";
+                statusBadge.className = "text-[10px] text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200 font-black";
             } catch (error) {
                 console.error("Gagal sinkronisasi cloud, memuat cadangan lokal.");
                 renderData(currentDatabase);
