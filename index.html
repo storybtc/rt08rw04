@@ -80,7 +80,7 @@
     <div class="w-full max-w-6xl flex flex-col gap-4 relative z-10">
         
         <div class="bg-gradient-to-r from-[#0d4722] via-[#1b723f] to-[#25a25a] text-center py-4 rounded-xl shadow-sm border border-[#1b723f]/20 px-3 flex flex-col gap-1.5 justify-center items-center overflow-hidden">
-            <h1 class="text-[#6EE7B7] font-black text-[4vw] md:text-2xl tracking-wider uppercase drop-shadow-[0_1px_2px_rgba(0,0,0,0.4)] leading-none whitespace-nowrap overflow-visible block w-full text-center">
+            <h1 class="text-[#6EE7B7] font-black text-[4vw] md:text-2xl tracking-wider uppercase drop-shadow-[0_1px_2px_rgba(0,0,0,0.4)] whitespace-nowrap overflow-visible block w-full text-center">
                 LAPORAN KAS RT 08 RW 04, BAKALAN LOR
             </h1>
             <p class="text-white font-extrabold text-[2.8vw] md:text-sm tracking-wide uppercase leading-none whitespace-nowrap overflow-visible block w-full text-center">
@@ -227,6 +227,11 @@
             return "Rp " + new Intl.NumberFormat('id-ID').format(angka);
         }
 
+        /* Format Khusus Rekap Bulanan */
+        function formatRupiahRekap(angka) {
+            return "Rp " + new Intl.NumberFormat('id-ID').format(angka);
+        }
+
         function convertDateToUI(dateString) {
             if (!dateString) return "-";
             if (dateString.includes(" ") && isNaN(dateString)) {
@@ -247,9 +252,10 @@
             return dateString;
         }
 
+        /* Fungsi Konversi Teks Nama Bulan Menjadi Huruf Normal (Bukan Capslock) */
         function getNamaBulan(dateStr) {
             const date = new Date(dateStr);
-            const namaBulan = ["JANUARI", "FEBRUARI", "MARET", "APRIL", "MEI", "JUNI", "JULI", "AGUSTUS", "SEPTEMBER", "OKTOBER", "NOVEMBER", "DESEMBER"];
+            const namaBulan = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
             return !isNaN(date.getTime()) ? `${namaBulan[date.getMonth()]} ${date.getFullYear()}` : "-";
         }
 
@@ -392,13 +398,14 @@
                     }
                 }
 
+                /* Rekap Bulanan Diperbarui */
                 if (isEndOfMonth) {
                     const rekapDiv = document.createElement("div");
-                    rekapDiv.className = "grid grid-cols-12 items-center py-2 px-1 my-1 bg-emerald-400 text-[#0f5132] rounded-lg border border-emerald-500/30 font-black shadow-sm text-center text-[10px] md:text-xs tracking-wide uppercase animate-fadeIn";
+                    rekapDiv.className = "grid grid-cols-12 items-center py-2 px-1 my-1 bg-emerald-400 text-[#0f5132] rounded-lg border border-emerald-500/30 font-bold shadow-sm text-center text-[10px] md:text-xs tracking-wide animate-fadeIn";
                     rekapDiv.innerHTML = `
-                        <div class="col-span-3 text-left pl-2">AKUMULASI SALDO</div>
-                        <div class="col-span-5 text-left font-extrabold">TOTAL SALDO BULAN ${getNamaBulan(item.tanggal)}</div>
-                        <div class="col-span-3 text-right pr-4 text-xs md:text-sm font-black">${formatRupiah(runningSaldo)}</div>
+                        <div class="col-span-3 text-left pl-2 font-black normal-case">AKUMULASI SALDO</div>
+                        <div class="col-span-5 text-left font-black normal-case">TOTAL SALDO BULAN${getNamaBulan(item.tanggal)}</div>
+                        <div class="col-span-3 text-right pr-4 text-sm md:text-xl font-black text-[#F8FAFC] [text-shadow:2px_2px_2px_#000000] normal-case">${formatRupiahRekap(runningSaldo)}</div>
                         <div class="col-span-1 text-center font-bold">✓</div>
                     `;
                     container.appendChild(rekapDiv);
