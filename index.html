@@ -293,9 +293,7 @@
             if (localData) {
                 currentDatabase = JSON.parse(localData);
             } else {
-                currentDatabase = [
-                    { tanggal: "2026-05-18", keterangan: "JUMPITAN HARI MINGGU", masuk: 50000, keluar: 0, nota: "" }
-                ];
+                currentDatabase = [];
                 saveToLocalStorage();
             }
         }
@@ -455,6 +453,9 @@
             
             if (!WEB_APP_URL || WEB_APP_URL.includes("ISI_DENGAN_URL")) {
                 renderData(currentDatabase);
+                document.getElementById("total-saldo").innerText = formatRupiah(0);
+                document.getElementById("total-pemasukan").innerText = formatRupiah(0);
+                document.getElementById("total-pengeluaran").innerText = formatRupiah(0);
                 statusBadge.innerText = "Lokal Terproteksi";
                 statusBadge.className = "text-[10px] text-slate-500 bg-slate-100 px-2 py-0.5 rounded-full border border-slate-200";
                 return;
@@ -466,7 +467,7 @@
                 if(data && data.length > 0) {
                     currentDatabase = data;
                 } else {
-                    currentDatabase = [{ tanggal: "2026-05-18", keterangan: "JUMPITAN HARI MINGGU", masuk: 50000, keluar: 0, nota: "" }];
+                    currentDatabase = [];
                 }
                 saveToLocalStorage();
                 renderData(currentDatabase);
