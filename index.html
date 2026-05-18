@@ -370,6 +370,7 @@
                 
                 let notaHtml = "";
                 if (item.nota && item.nota.trim() !== "") {
+                    // md:px-0 disematkan untuk membuang ganjalan spasi kiri, memaksa nota tegak lurus rata kiri penuh di komputer
                     notaHtml = `
                         <div class="w-full flex justify-start text-left mt-1.5 md:mt-1 md:px-0">
                             <a href="${item.nota}" target="_blank" class="text-[11px] text-blue-600 hover:text-blue-800 bg-[#e8f0fe] hover:bg-blue-100 px-2 py-0.5 rounded-md inline-flex items-center transition-colors tracking-wide text-left uppercase whitespace-nowrap font-black select-none">
@@ -388,10 +389,12 @@
                     </div>
                     
                     <div class="md:col-span-4 text-slate-700 uppercase leading-tight text-xs md:text-sm flex flex-row md:flex-col items-start justify-start md:justify-center min-w-0 w-full text-left md:pl-4">
+                        
                         <span class="md:hidden text-slate-400 uppercase text-[9px] tracking-wider text-left block shrink-0 pt-0.5 select-none pr-1">Keterangan:</span>
                         
                         <div class="flex-1 flex flex-col items-start justify-center text-left min-w-0 md:w-full md:px-0">
                             <span class="text-left break-all whitespace-normal uppercase font-black text-slate-900 text-[13px] md:text-sm block w-full">${item.keterangan}</span>
+                            
                             ${notaHtml}
                         </div>
                     </div>
