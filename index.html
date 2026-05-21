@@ -172,7 +172,6 @@
         </div>
     </div>
 
-    <!-- Modal Form Input -->
     <div id="transaction-modal" class="hidden fixed inset-0 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4 z-50">
         <div class="bg-white border border-slate-200 rounded-2xl w-full max-w-sm p-5 shadow-xl relative text-slate-800">
             <h3 id="modal-title" class="text-[#115e3b] text-sm uppercase mb-4 break-words">Input Data Kas</h3>
@@ -210,7 +209,6 @@
         </div>
     </div>
 
-    <!-- Modal PIN -->
     <div id="pin-modal" class="hidden fixed inset-0 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4 z-50 animate-fadeIn">
         <div class="bg-white border border-slate-200 rounded-2xl w-full max-w-xs p-5 shadow-2xl relative text-slate-800 text-center">
             <div class="w-12 h-12 rounded-full bg-emerald-50 text-[#115e3b] flex items-center justify-center mx-auto mb-3">
@@ -232,7 +230,6 @@
         </div>
     </div>
 
-    <!-- Modal Security Logs -->
     <div id="logs-modal" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 z-50 animate-fadeIn">
         <div class="bg-white border border-slate-200 rounded-2xl w-full max-w-sm p-5 shadow-2xl relative text-slate-800">
             <div class="flex justify-between items-center mb-4 border-b border-slate-100 pb-2">
@@ -244,8 +241,7 @@
                 </button>
             </div>
             <div id="security-logs-container" class="max-h-72 overflow-y-auto bg-slate-50 border border-slate-200 rounded-xl p-3 flex flex-col gap-2">
-                <!-- Data Logs Inject Here -->
-            </div>
+                </div>
         </div>
     </div>
 
@@ -610,11 +606,9 @@
                     rekapDiv.className = "flex flex-col md:grid md:grid-cols-12 md:items-center py-2.5 px-3 my-2 bg-[#115e3b] text-white rounded-xl border border-emerald-800 shadow-sm text-[11px] md:text-xs tracking-wide uppercase w-full text-center gap-1 md:gap-0 overflow-hidden";
                     rekapDiv.innerHTML = `
                         <div class="md:contents flex flex-col items-center justify-center gap-1 w-full">
-                            <div class="md:col-span-5 font-black normal-case md:px-4 text-center md:text-left break-words w-full">AKUMULASI SALDO BULAN ${getNamaBulan(item.tanggal)}</div>
-                            <div class="hidden md:block md:col-span-1 shrink-0"></div>
+                            <div class="md:col-span-6 font-black normal-case md:px-4 text-center md:text-left break-words w-full">AKUMULASI SALDO BULAN ${getNamaBulan(item.tanggal)}</div>
                             <div class="hidden md:block md:col-span-2 shrink-0"></div>
-                            <div class="hidden md:block md:col-span-2 shrink-0"></div>
-                            <div class="md:col-span-2 md:text-right font-black normal-case md:pr-4 shrink-0 text-sm md:text-lg font-black w-full text-center whitespace-nowrap">${formatRupiah(runningSaldo)}</div>
+                            <div class="md:col-span-4 md:text-right font-black normal-case md:pr-4 shrink-0 text-xl md:text-2xl w-full text-center whitespace-nowrap">${formatRupiah(runningSaldo)}</div>
                         </div>
                     `;
                     container.appendChild(rekapDiv);
