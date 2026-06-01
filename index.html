@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -111,7 +112,7 @@
                 RT 08 : BP. PURNOMO | RW 04 : BP. KATENO
             </p>
             <div class="text-[#00FF66] text-[2.5vw] md:text-[0.9vw] font-black tracking-widest leading-relaxed max-w-2xl mx-auto mt-1 text-center uppercase whitespace-nowrap px-2" style="text-shadow: 0 0 4px rgba(0,255,102,0.3);">
-                LAPORAN KAS DIGITAL SYSTEM
+                LAPORAN KAS RT.08 DIGITAL SYSTEM
             </div>
         </div>
 
@@ -124,25 +125,25 @@
                     </p>
                 </div>
                 <p class="text-[10px] md:text-xs text-emerald-100 mb-1 tracking-wide uppercase">SALDO KAS SAAT INI</p>
-                <p id="total-saldo" class="text-3xl sm:text-4xl md:text-7xl tracking-tight text-white whitespace-nowrap w-full text-center" style="text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.45);">Rp 0</p>
+                <p id="total-saldo" class="text-3xl sm:text-4xl md:text-7xl tracking-tight text-white break-words w-full text-center" style="text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.45);">Rp 0</p>
             </div>
         </div>
 
         <div class="grid grid-cols-2 gap-3">
             <div class="bg-white border border-slate-200/80 p-3 md:p-4 rounded-2xl shadow-sm relative overflow-hidden">
                 <div class="absolute top-0 left-0 bottom-0 w-[4px] bg-[#10b981]"></div>
-                <p class="text-[9px] md:text-xs text-slate-500 uppercase tracking-wider mb-0.5 whitespace-nowrap">Total Pemasukan</p>
-                <p id="total-pemasukan" class="text-sm sm:text-base md:text-2xl text-[#10b981] whitespace-nowrap">Rp 0</p>
+                <p class="text-[9px] md:text-xs text-slate-500 uppercase tracking-wider mb-0.5 break-words">Total Pemasukan</p>
+                <p id="total-pemasukan" class="text-sm sm:text-base md:text-2xl text-[#10b981] break-words">Rp 0</p>
             </div>
             <div class="bg-white border border-slate-200/80 p-3 md:p-4 rounded-2xl shadow-sm relative overflow-hidden">
                 <div class="absolute top-0 left-0 bottom-0 w-[4px] bg-[#ef4444]"></div>
-                <p class="text-[9px] md:text-xs text-slate-500 uppercase tracking-wider mb-0.5 whitespace-nowrap">Total Pengeluaran</p>
-                <p id="total-pengeluaran" class="text-sm sm:text-base md:text-2xl text-[#ef4444] whitespace-nowrap">Rp 0</p>
+                <p class="text-[9px] md:text-xs text-slate-500 uppercase tracking-wider mb-0.5 break-words">Total Pengeluaran</p>
+                <p id="total-pengeluaran" class="text-sm sm:text-base md:text-2xl text-[#ef4444] break-words">Rp 0</p>
             </div>
         </div>
 
         <button onclick="requestAccess('add')" class="w-full bg-[#10b981] hover:bg-[#059669] text-white py-3.5 px-4 rounded-xl transition duration-200 flex items-center justify-center gap-2 shadow-sm tracking-wide text-xs md:text-sm uppercase text-center break-words">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-emerald-100 shrink-0" viewBox="0 0 20 20" fill="currentColor">
+            <svg xmlns="http://www.w3.org/2000/xl" class="h-4 w-4 text-emerald-100 shrink-0" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
             </svg>
             <span class="break-words">INPUT DATA BARU</span>
@@ -166,9 +167,8 @@
             <div id="mutasi-list" class="flex flex-col gap-2 md:gap-1 text-xs md:text-sm w-full"></div>
         </div>
 
-        <div class="text-center py-1 flex flex-col items-center">
-            <p class="text-[9px] md:text-[11px] tracking-widest text-slate-400 uppercase break-words select-none">POWERED BY : MBS ID</p>
-            <button onclick="requestAccess('logs')" class="text-[8px] tracking-widest text-slate-400/70 hover:text-slate-500 mt-0.5 uppercase cursor-pointer transition-colors focus:outline-none">SECURITY LOGS</button>
+        <div class="text-center py-1">
+            <p class="text-[9px] md:text-xs tracking-widest text-slate-400 uppercase break-words">POWERED BY : MBS ID</p>
         </div>
     </div>
 
@@ -217,7 +217,7 @@
                 </svg>
             </div>
             <h3 class="text-[#115e3b] text-sm uppercase mb-1 break-words">PIN Otorisasi Sistem</h3>
-            <p id="pin-modal-desc" class="text-[10px] text-slate-400 mb-4 uppercase tracking-wide break-words">Masukkan PIN Keamanan Sistem</p>
+            <p class="text-[10px] text-slate-400 mb-4 uppercase tracking-wide break-words">Masukkan PIN Keamanan Sistem</p>
             <form id="pin-form" onsubmit="submitPinVerification(event)">
                 <div class="mb-4">
                     <input type="password" id="input-security-pin" inputmode="numeric" pattern="[0-9]*" maxlength="6" placeholder="••••••" class="w-full text-center bg-slate-50 border border-slate-300 rounded-xl p-3 text-lg font-black tracking-widest text-slate-800 focus:outline-none focus:border-[#115e3b]" required autocomplete="off">
@@ -230,38 +230,13 @@
         </div>
     </div>
 
-    <div id="logs-modal" class="hidden fixed inset-0 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-        <div class="bg-white border border-slate-200 rounded-2xl w-full max-w-md p-5 shadow-2xl relative text-slate-800">
-            <h3 class="text-rose-700 text-sm uppercase mb-1 tracking-wide">SYSTEM SECURITY LOGS</h3>
-            <p class="text-[10px] text-slate-400 mb-4 uppercase tracking-wider">Rekam Jejak Operasional Sistem Kas</p>
-            <div id="logs-content" class="bg-slate-950 p-3 rounded-xl max-h-96 overflow-y-auto font-mono text-[7.5px] md:text-[9px] text-emerald-400 flex flex-col gap-1.5 border border-slate-800">
-                <div>[SYSTEM] INITIALIZING SECURITY SUBSYSTEM... SUCCESS.</div>
-                <div>[SYSTEM] MONITORING ACTIVE ON STATION RT_08_BAKALAN_LOR.</div>
-                <div>[INFO] FETCHING DEVICE AND NETWORK GEOLOCATION FROM IPAPI.CO...</div>
-            </div>
-            <div class="flex justify-end mt-4">
-                <button onclick="closeLogsModal()" class="bg-slate-100 hover:bg-slate-200 text-slate-600 px-4 py-2 rounded-xl text-xs uppercase tracking-wider">Tutup</button>
-            </div>
-        </div>
-    </div>
-
     <script>
-        // Tautan Baru Sesuai Request Yang Mengarah Langsung ke Sistem Google Apps Script 3 Sheets Anda
-        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwnVsrzHi9OUxhmsQD9MALOfwx28RHpt0kyhpL5uvE9fg6JlBn9fZ0GW9SAL3t7-LXCqw/exec";
-        
-        // Proteksi Maksimal: Variabel PIN Dikosongkan Total Agar Tidak Bisa Diintip Lewat Inspect Element Browser
-        const SECURITY_PIN = "";
-        const LOGS_PIN = "";
-        
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxEVJmHYhLlGSKqy8u5t6HusWdLMI-PJoidvoaEaWsB9f5GUrRvP47OyVIqSA3SfQSz/exec";
+        const SECURITY_PIN = "999";
         let currentDatabase = [];
         let currentAccessSession = { mode: null, index: null };
-        let deviceSecurityData = { ip: "LOADING...", device: "LOADING...", location: "LOADING..." };
-
-        let fullNetworkScheme = {};
-        let fullDeviceScheme = {};
 
         function createSnowflake() {
-            // BERHASIL DIUBAH: Mengganti 'TXT' menjadi simbol salju murni murni '✻'
             const snowChars = ['❄','❅','❆','✻'];
             const snow = document.createElement('div');
             snow.className = 'snowflake';
@@ -286,7 +261,7 @@
 
         function convertDateToUI(dateString) {
             if (!dateString) return "-";
-            if (typeof dateString === "string" && dateString.includes(" ") && isNaN(dateString)) {
+            if (dateString.includes(" ") && isNaN(dateString)) {
                 const parsedDate = new Date(dateString);
                 if (!isNaN(parsedDate.getTime())) {
                     const dd = String(parsedDate.getDate()).padStart(2, '0');
@@ -295,19 +270,11 @@
                     return `${dd}/${mm}/${yyyy}`;
                 }
             }
-            if (typeof dateString === "string" && dateString.includes("-")) {
+            if (dateString.includes("-")) {
                 const parts = dateString.split("T")[0].split("-");
                 if (parts.length === 3) {
                     return `${parts[2]}/${parts[1]}/${parts[0]}`;
                 }
-            }
-            // Jika object date utuh dari JSON Apps Script
-            const directDate = new Date(dateString);
-            if (!isNaN(directDate.getTime())) {
-                const dd = String(directDate.getDate()).padStart(2, '0');
-                const mm = String(directDate.getMonth() + 1).padStart(2, '0');
-                const yyyy = directDate.getFullYear();
-                return `${dd}/${mm}/${yyyy}`;
             }
             return dateString;
         }
@@ -332,139 +299,10 @@
             }
         }
 
-        function getDeviceModel() {
-            const ua = navigator.userAgent;
-            if (/android/i.test(ua)) {
-                const match = ua.match(/Android.*;\s*([^;)]+)\s*[;)]/);
-                return match ? match[1].trim() : "Android Device";
-            }
-            if (/iPhone/i.test(ua)) return "Apple iPhone";
-            if (/iPad/i.test(ua)) return "Apple iPad";
-            if (/Windows/i.test(ua)) return "Windows PC";
-            if (/Macintosh/i.test(ua)) return "Mac Extended PC";
-            if (/Linux/i.test(ua)) return "Linux System";
-            return "Generic Terminal Device";
-        }
-
-        async function initSecurityTracking() {
-            deviceSecurityData.device = getDeviceModel();
-            
-            fullDeviceScheme = {
-                device_id: "DEV-" + Math.floor(100000 + Math.random() * 900000),
-                device_type: /Mobi/.test(navigator.userAgent) ? "mobile" : "desktop",
-                device_brand: /Android/i.test(navigator.userAgent) ? "Xiaomi/Generic" : "Asus/Generic",
-                device_model: deviceSecurityData.device,
-                device_name: "Budi Phone",
-                operating_system: /Android/i.test(navigator.userAgent) ? "Android" : "Windows",
-                os_version: "13",
-                browser: "Chrome",
-                browser_version: "136.0.0",
-                screen_resolution: window.screen.width + "x" + window.screen.height,
-                language: navigator.language || "id-ID",
-                timezone: "Asia/Jakarta",
-                user_agent: navigator.userAgent,
-                cpu_architecture: "arm64",
-                ram_gb: 8,
-                battery_level: 72,
-                battery_charging: true,
-                cookies_enabled: navigator.cookieEnabled,
-                javascript_enabled: true,
-                touch_support: navigator.maxTouchPoints > 0,
-                app_version: "2.5.1",
-                device_trusted: true,
-                root_detected: false,
-                emulator_detected: false,
-                fingerprint_id: "FP-882991-ABCD",
-                camera_permission: "granted",
-                location_permission: "granted",
-                notification_permission: "denied"
-            };
-
-            try {
-                const res = await fetch('https://ipapi.co/json/');
-                if (res.ok) {
-                    const data = await res.json();
-                    deviceSecurityData.ip = data.ip || "UNKNOWN";
-                    deviceSecurityData.location = `${data.city || ''}, ${data.region || ''}, ${data.country_name || ''}`;
-                    
-                    fullNetworkScheme = {
-                        ip_address: data.ip || "36.xxx.xxx.xxx",
-                        private_ip: "192.168.1.10",
-                        country: data.country_name || "Indonesia",
-                        province: data.region || "Jawa Timur",
-                        city: data.city || "Surabaya",
-                        postal_code: data.postal || "601xx",
-                        timezone: data.timezone || "Asia/Jakarta",
-                        latitude: data.latitude || -7.2575,
-                        longitude: data.longitude || 112.7521,
-                        isp: data.org || "Telkom Indonesia",
-                        organization: data.org || "IndiHome",
-                        asn: data.asn || "AS7713",
-                        connection_type: "wifi",
-                        network_generation: "4G",
-                        carrier: "Telkomsel",
-                        vpn_detected: false,
-                        proxy_detected: false,
-                        tor_detected: false,
-                        dns: "8.8.8.8",
-                        hostname: "user-" + (data.ip ? data.ip.split('.')[0] : "36") + "-xxx.telkom.net",
-                        request_origin: "public",
-                        request_protocol: "HTTPS",
-                        port: 443,
-                        tls_version: "TLS 1.3",
-                        request_size_bytes: 2048,
-                        response_size_bytes: 8192,
-                        latency_ms: 120,
-                        geo_accuracy: "city",
-                        blacklist_status: false,
-                        risk_score: 12
-                    };
-                } else {
-                    throw new Error();
-                }
-            } catch (e) {
-                deviceSecurityData.ip = "36.72.13.45";
-                deviceSecurityData.location = "Kediri, Jawa Timur, Indonesia";
-                
-                fullNetworkScheme = {
-                    ip_address: "36.72.13.45", private_ip: "192.168.1.10", country: "Indonesia", province: "Jawa Timur", city: "Kediri", postal_code: "64129", timezone: "Asia/Jakarta", latitude: -7.8167, longitude: 112.0167, isp: "Telkom Indonesia", organization: "IndiHome", asn: "AS7713", connection_type: "wifi", network_generation: "4G", carrier: "Telkomsel", vpn_detected: false, proxy_detected: false, tor_detected: false, dns: "8.8.8.8", hostname: "user-36-xxx.telkom.net", request_origin: "public", request_protocol: "HTTPS", port: 443, tls_version: "TLS 1.3", request_size_bytes: 2048, response_size_bytes: 8192, latency_ms: 120, geo_accuracy: "city", blacklist_status: false, risk_score: 12
-                };
-            }
-        }
-
-        function writeLogToStorage(actionType, detailText) {
-            let logs = [];
-            try {
-                const existingLogs = localStorage.getItem("KAS_RT_SECURITY_LOGS");
-                if (existingLogs) logs = JSON.parse(existingLogs);
-            } catch (e) { logs = []; }
-
-            const timestamp = new Date().toLocaleString('id-ID');
-            
-            const logEntry = {
-                meta: `[${timestamp}] [${actionType.toUpperCase()}] oleh HP: ${fullDeviceScheme.device_brand} ${fullDeviceScheme.device_model} -> ${detailText}`,
-                network: { ...fullNetworkScheme },
-                device: { ...fullDeviceScheme }
-            };
-            
-            logs.unshift(logEntry);
-            if (logs.length > 30) logs.pop();
-            localStorage.setItem("KAS_RT_SECURITY_LOGS", JSON.stringify(logs));
-        }
-
         function requestAccess(mode, index = null) {
             currentAccessSession.mode = mode;
             currentAccessSession.index = index;
             document.getElementById("input-security-pin").value = "";
-            
-            // Atur instruksi PIN modal sesuai aksi agar sinkron dengan tipe PIN Apps Script
-            const descElem = document.getElementById("pin-modal-desc");
-            if (mode === 'logs') {
-                descElem.innerText = "Masukkan PIN Logs Sistem";
-            } else {
-                descElem.innerText = "Masukkan PIN Keamanan Sistem";
-            }
-            
             document.getElementById("pin-modal").classList.remove("hidden");
             document.getElementById("input-security-pin").focus();
         }
@@ -473,102 +311,21 @@
             document.getElementById("pin-modal").classList.add("hidden");
         }
 
-        function openLogsModal() {
-            const container = document.getElementById("logs-content");
-            const timestamp = new Date().toLocaleString('id-ID');
-            
-            let mutasiLogsHtml = "";
-            try {
-                const storedMutasiLogs = JSON.parse(localStorage.getItem("KAS_RT_SECURITY_LOGS")) || [];
-                if (storedMutasiLogs.length === 0) {
-                    mutasiLogsHtml = `<div class="text-slate-500">[MUTASI LOG] BELUM ADA REKAMAN AKTIVITAS DATA.</div>`;
-                } else {
-                    storedMutasiLogs.forEach(entry => {
-                        let colorClass = "text-[#00FF66]";
-                        if (entry.meta.includes("[DELETE]")) colorClass = "text-rose-400";
-                        if (entry.meta.includes("[CREATE]")) colorClass = "text-emerald-400";
-                        
-                        mutasiLogsHtml += `
-                            <div class="${colorClass} mt-1 font-bold">${entry.meta}</div>
-                            <div class="text-indigo-400 pl-3">   • [DETAILED NETWORK SCHEME]:</div>
-                            <div class="text-slate-300 pl-5">      - IP Address: ${entry.network.ip_address} | Private IP: ${entry.network.private_ip}</div>
-                            <div class="text-slate-300 pl-5">      - Location: ${entry.network.city}, ${entry.network.province}, ${entry.network.country} (${entry.network.postal_code})</div>
-                            <div class="text-slate-300 pl-5">      - Path Node: ISP: ${entry.network.isp} | Org: ${entry.network.organization} | ASN: ${entry.network.asn}</div>
-                            <div class="text-slate-300 pl-5">      - Connection: ${entry.network.connection_type} | ${entry.network.network_generation} Gen | Carrier: ${entry.network.carrier}</div>
-                            <div class="text-slate-300 pl-5">      - System Node: Protocol: ${entry.network.request_protocol} | Port: ${entry.network.port} | TLS: ${entry.network.tls_version} | Latency: ${entry.network.latency_ms}ms</div>
-                            <div class="text-slate-300 pl-5">      - Audit: VPN: ${entry.network.vpn_detected} | Proxy: ${entry.network.proxy_detected} | Tor: ${entry.network.tor_detected} | Risk Score: ${entry.network.risk_score}</div>
-                            <div class="text-cyan-400 pl-3">   • [DETAILED DEVICE SCHEME]:</div>
-                            <div class="text-slate-300 pl-5">      - Terminal ID: ${entry.device.device_id} | Type: ${entry.device.device_type} | Name: ${entry.device.device_name}</div>
-                            <div class="text-slate-300 pl-5">      - Hardware: Brand: ${entry.device.device_brand} | Model: ${entry.device.device_model} | Arch: ${entry.device.cpu_architecture} | RAM: ${entry.device.ram_gb} GB</div>
-                            <div class="text-slate-300 pl-5">      - System Environment: OS: ${entry.device.operating_system} v${entry.device.os_version} | Browser: ${entry.device.browser} v${entry.device.browser_version} | Resolution: ${entry.device.screen_resolution}</div>
-                            <div class="text-slate-300 pl-5">      - Status Node: Battery: ${entry.device.battery_level}% (Charging: ${entry.device.battery_charging}) | Touch Support: ${entry.device.touch_support}</div>
-                            <div class="text-slate-300 pl-5">      - App Parameters: App Version: ${entry.device.app_version} | Fingerprint ID: ${entry.device.fingerprint_id} | Trusted Node: ${entry.device.device_trusted}</div>
-                            <div class="text-slate-300 pl-5">      - Security Audit: Root: ${entry.device.root_detected} | Emulator: ${entry.device.emulator_detected}</div>
-                            <div class="text-slate-300 pl-5">      - Manifest Permissions: Camera: ${entry.device.camera_permission.toUpperCase()} | Location: ${entry.device.location_permission.toUpperCase()} | Notification: ${entry.device.notification_permission.toUpperCase()}</div>
-                        `;
-                    });
-                }
-            } catch (e) {
-                mutasiLogsHtml = `<div>[ERROR] GAGAL MEMUAT MUTASI DATABASE LOG.</div>`;
-            }
-
-            container.innerHTML = `
-                <div>[SYSTEM] INITIALIZING SECURITY SUBSYSTEM... SUCCESS.</div>
-                <div>[SYSTEM] MONITORING ACTIVE ON STATION RT_08_BAKALAN_LOR.</div>
-                <div class="text-white">--------------------------------------------------</div>
-                <div class="text-amber-400">[LIVE ACCESS TIME]   : ${timestamp}</div>
-                <div class="text-cyan-400">[LIVE IP TARGET]     : ${deviceSecurityData.ip} </div>
-                <div class="text-cyan-400">[LIVE HARDWARE]      : ${deviceSecurityData.device}</div>
-                <div class="text-cyan-400">[LIVE LOCATION]      : ${deviceSecurityData.location}</div>
-                <div class="text-white">--------------------------------------------------</div>
-                <div class="text-slate-400 font-bold mb-1">[RIWAYAT AKTIVITAS INPUT & HAPUS DATA (OTOMATIS HP PELAKSANA)]:</div>
-                ${mutasiLogsHtml}
-                <div class="text-white">--------------------------------------------------</div>
-                <div class="text-emerald-500">[STATUS] AUTHENTICATED LOGS TERMINATED CLEANLY WITH CLOUD SETTINGS.</div>
-            `;
-            document.getElementById("logs-modal").classList.remove("hidden");
-        }
-
-        function closeLogsModal() {
-            document.getElementById("logs-modal").classList.add("hidden");
-        }
-
-        // FUNGSI UTAMA BARU: Mengirim Token PIN Langsung Ke Cloud Backend Menggunakan Method Fetch Asinkron
-        async function submitPinVerification(e) {
+        function submitPinVerification(e) {
             e.preventDefault();
             const typedPin = document.getElementById("input-security-pin").value;
-            const statusBadge = document.getElementById("loading-status");
-            
-            statusBadge.innerText = "Verifikasi...";
-            statusBadge.className = "text-[10px] text-amber-600 bg-amber-50 px-2 py-0.5 rounded-full animate-pulse border border-amber-200";
-
-            // Mengikuti pemisahan parameter tipe PIN pada doGet Apps Script Anda
-            const pinType = (currentAccessSession.mode === 'logs') ? "LOGS" : "SECURITY";
-
-            try {
-                const res = await fetch(`${WEB_APP_URL}?action=CHECK_PIN&pin=${typedPin}&type=${pinType}`);
-                const result = await res.json();
-                
-                if (result.status === "SUCCESS") {
-                    closePinModal();
-                    if (currentAccessSession.mode === 'logs') {
-                        openLogsModal();
-                    } else if (currentAccessSession.mode === 'add') {
-                        openModal('add');
-                    } else if (currentAccessSession.mode === 'delete') {
-                        executeDelete(currentAccessSession.index);
-                    }
-                } else {
-                    alert("⚠️ PIN Salah! Akses ditolak.");
-                    document.getElementById("input-security-pin").value = "";
-                    document.getElementById("input-security-pin").focus();
+            if (typedPin === SECURITY_PIN) {
+                closePinModal();
+                if (currentAccessSession.mode === 'add') {
+                    openModal('add');
+                } else if (currentAccessSession.mode === 'delete') {
+                    executeDelete(currentAccessSession.index);
                 }
-            } catch (err) {
-                alert("⚠️ Gagal verifikasi. Pastikan sistem terhubung ke internet dan Web App URL aktif.");
+            } else {
+                alert("⚠️ PIN Salah! Akses ditolak.");
+                document.getElementById("input-security-pin").value = "";
+                document.getElementById("input-security-pin").focus();
             }
-            
-            statusBadge.innerText = "Terupdate";
-            statusBadge.className = "text-[10px] text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200";
         }
 
         function openModal(mode, index = null) {
@@ -614,7 +371,7 @@
                 if (item.nota && item.nota.trim() !== "") {
                     notaHtml = `
                         <div class="w-full flex justify-start text-left mt-1.5 md:mt-1 md:px-0">
-                            <a href="${item.nota}" target="_blank" class="text-[11px] text-blue-600 hover:text-blue-800 bg-[#e8f0fe] md:bg-transparent md:hover:bg-transparent md:p-0 px-2 py-0.5 rounded-md inline-flex items-center transition-colors tracking-wide text-left uppercase whitespace-nowrap font-black select-none md:border-none">
+                            <a href="${item.nota}" target="_blank" class="text-[11px] text-blue-600 hover:text-blue-800 bg-[#e8f0fe] hover:bg-blue-100 px-2 py-0.5 rounded-md inline-flex items-center transition-colors tracking-wide text-left uppercase whitespace-nowrap font-black select-none">
                                 Lihat Foto Nota
                             </a>
                         </div>`;
@@ -623,7 +380,7 @@
                 rowContainer.innerHTML = `
                     <div class="flex justify-between items-center md:col-span-1 text-slate-500 text-[11px] md:text-sm border-b border-dashed border-slate-100 md:border-0 pb-1 md:pb-0 shrink-0 gap-2">
                         <span class="md:hidden text-slate-400 uppercase text-[9px] shrink-0">Tanggal:</span>
-                        <span class="whitespace-nowrap text-right md:text-left font-black">${convertDateToUI(item.tanggal)}</span>
+                        <span class="break-words whitespace-normal text-right md:text-left font-black">${convertDateToUI(item.tanggal)}</span>
                         <button onclick="requestAccess('delete', ${index})" class="md:hidden text-rose-500 hover:text-rose-700 p-1 bg-rose-50 rounded shrink-0">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
                         </button>
@@ -633,26 +390,26 @@
                         <span class="md:hidden text-slate-400 uppercase text-[9px] tracking-wider text-left block shrink-0 pt-0.5 select-none pr-1">Keterangan:</span>
                         
                         <div class="flex-1 flex flex-col items-start justify-center text-left min-w-0 md:w-full md:px-0">
-                            <span class="text-left break-words whitespace-normal uppercase font-black text-slate-900 text-[13px] md:text-sm block w-full">${item.keterangan}</span>
+                            <span class="text-left break-all whitespace-normal uppercase font-black text-slate-900 text-[13px] md:text-sm block w-full">${item.keterangan}</span>
                             ${notaHtml}
                         </div>
                     </div>
                     
                     <div class="md:col-span-2 md:text-right text-[#10b981] text-xs md:text-sm flex justify-between md:justify-end md:pr-4 min-w-0 flex-1 w-full gap-2">
                         <span class="md:hidden text-slate-400 uppercase text-[9px] shrink-0">Masuk (+):</span>
-                        <span class="whitespace-nowrap text-right font-black">${masuk > 0 ? formatRupiah(masuk) : "-"}</span>
+                        <span class="break-words whitespace-normal text-right font-black">${masuk > 0 ? formatRupiah(masuk) : "-"}</span>
                     </div>
                     <div class="md:col-span-2 md:text-right text-[#ef4444] text-xs md:text-sm flex justify-between md:justify-end md:pr-4 min-w-0 flex-1 w-full gap-2">
                         <span class="md:hidden text-slate-400 uppercase text-[9px] shrink-0">Keluar (-):</span>
-                        <span class="whitespace-nowrap text-right font-black">${keluar > 0 ? formatRupiah(keluar) : "-"}</span>
+                        <span class="break-words whitespace-normal text-right font-black">${keluar > 0 ? formatRupiah(keluar) : "-"}</span>
                     </div>
-                    <div class="md:col-span-2 md:text-right text-blue-600 md:text-blue-600 text-xs md:text-sm flex justify-between md:justify-end md:pr-4 bg-blue-50/70 md:bg-transparent p-1.5 md:p-0 rounded-lg min-w-0 flex-1 w-full gap-2 items-center">
+                    <div class="md:col-span-2 md:text-right text-blue-600 md:text-emerald-700 text-xs md:text-sm flex justify-between md:justify-end md:pr-4 bg-blue-50/70 md:bg-transparent p-1.5 md:p-0 rounded-lg min-w-0 flex-1 w-full gap-2 items-center">
                         <span class="md:hidden text-slate-500 uppercase text-[9px] shrink-0">Saldo Akhir:</span>
-                        <span class="whitespace-nowrap text-right font-black text-sm md:text-sm">${formatRupiah(runningSaldo)}</span>
+                        <span class="break-words whitespace-normal text-right font-black text-sm md:text-sm">${formatRupiah(runningSaldo)}</span>
                     </div>
                     <div class="hidden md:flex md:col-span-1 justify-center shrink-0">
                         <button onclick="requestAccess('delete', ${index})" class="text-rose-500 hover:text-rose-600 transition p-1" title="Hapus">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                            <svg xmlns="http://www.w3.org/200xl" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
                         </button>
                     </div>
                 `;
@@ -674,9 +431,11 @@
                     rekapDiv.className = "flex flex-col md:grid md:grid-cols-12 md:items-center py-2.5 px-3 my-2 bg-[#115e3b] text-white rounded-xl border border-emerald-800 shadow-sm text-[11px] md:text-xs tracking-wide uppercase w-full text-center gap-1 md:gap-0 overflow-hidden";
                     rekapDiv.innerHTML = `
                         <div class="md:contents flex flex-col items-center justify-center gap-1 w-full">
-                            <div class="md:col-span-6 font-black normal-case md:px-4 text-center md:text-left break-words w-full">AKUMULASI SALDO BULAN ${getNamaBulan(item.tanggal)}</div>
+                            <div class="md:col-span-5 font-black normal-case md:px-4 text-center md:text-left break-words w-full">AKUMULASI SALDO BULAN ${getNamaBulan(item.tanggal)}</div>
+                            <div class="hidden md:block md:col-span-1 shrink-0"></div>
                             <div class="hidden md:block md:col-span-2 shrink-0"></div>
-                            <div class="md:col-span-4 md:text-right font-black normal-case md:pr-4 shrink-0 text-xl md:text-2xl w-full text-center whitespace-nowrap">${formatRupiah(runningSaldo)}</div>
+                            <div class="hidden md:block md:col-span-2 shrink-0"></div>
+                            <div class="md:col-span-2 md:text-right font-black normal-case md:pr-4 shrink-0 text-sm md:text-lg font-black w-full text-center break-words">${formatRupiah(runningSaldo)}</div>
                         </div>
                     `;
                     container.appendChild(rekapDiv);
@@ -727,18 +486,14 @@
             e.preventDefault();
             const payload = {
                 action: "CREATE",
+                rowIndex: null,
                 tanggal: document.getElementById("form-tanggal").value,
                 keterangan: document.getElementById("form-keterangan").value.toUpperCase(),
                 masuk: parseInt(document.getElementById("form-masuk").value) || 0,
                 keluar: parseInt(document.getElementById("form-keluar").value) || 0,
-                nota: document.getElementById("form-nota").value,
-                ip: deviceSecurityData.ip,
-                location: deviceSecurityData.location,
-                device: deviceSecurityData.device
+                nota: document.getElementById("form-nota").value
             };
-            
             closeModal();
-            
             const statusBadge = document.getElementById("loading-status");
             statusBadge.innerText = "Menyimpan...";
             
@@ -751,9 +506,6 @@
             });
             saveToLocalStorage();
             renderData(currentDatabase);
-
-            const detailLogInput = `INPUT BARU [Tgl Transaksi: ${convertDateToUI(payload.tanggal)}] Ket: "${payload.keterangan}", Masuk: ${formatRupiah(payload.masuk)}, Keluar: ${formatRupiah(payload.keluar)}`;
-            writeLogToStorage("CREATE", detailLogInput);
             
             try {
                 await fetch(WEB_APP_URL, {
@@ -771,7 +523,6 @@
         async function executeDelete(index) {
             const targetData = currentDatabase[index];
             if (!confirm(`Hapus transaksi: "${targetData.keterangan}"?`)) return;
-            
             const statusBadge = document.getElementById("loading-status");
             statusBadge.innerText = "Menghapus...";
             
@@ -780,17 +531,11 @@
                 tanggal: targetData.tanggal,
                 keterangan: targetData.keterangan,
                 masuk: targetData.masuk,
-                keluar: targetData.keluar,
-                ip: deviceSecurityData.ip,
-                location: deviceSecurityData.location,
-                device: deviceSecurityData.device
+                keluar: targetData.keluar
             };
             currentDatabase.splice(index, 1);
             saveToLocalStorage();
             renderData(currentDatabase);
-
-            const detailLogHapus = `HAPUS DATA [Tgl Transaksi: ${convertDateToUI(payload.tanggal)}] Ket: "${payload.keterangan}", Masuk Lama: ${formatRupiah(payload.masuk)}, Keluar Lama: ${formatRupiah(payload.keluar)}`;
-            writeLogToStorage("DELETE", detailLogHapus);
             
             try {
                 await fetch(WEB_APP_URL, {
@@ -808,8 +553,8 @@
         window.addEventListener("DOMContentLoaded", () => {
             loadFromLocalStorage();
             fetchLiveKasData();
-            initSecurityTracking();
         });
     </script>
 </body>
 </html>
+
