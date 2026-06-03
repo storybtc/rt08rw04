@@ -230,10 +230,10 @@
     </div>
 
     <script>
-        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxEVJmHYhLlGSKqy8u5t6HusWdLMI-PJoidvoaEaWsB9f5GUrRvP47OyVIqSA3SfQSz/exec";
-        const SECURITY_PIN = "999";
+        // URL Apps Script Terbaru yang sudah sinkron
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxRefUvBl6Kqy6z4p1mK6h9iV7KmdDqFVT-fdfRRE2ZgZ4m_z_H_uU0X-w_j-g/exec";
         let currentDatabase = [];
-        let currentAccessSession = { mode: null, index: null };
+        let currentAccessSession = { mode: null, index: null, validatedPin: "" };
 
         function createSnowflake() {
             const snowChars = ['❄','❅','❆','✻'];
@@ -301,6 +301,7 @@
         function requestAccess(mode, index = null) {
             currentAccessSession.mode = mode;
             currentAccessSession.index = index;
+            currentAccessSession.validatedPin = "";
             document.getElementById("input-security-pin").value = "";
             document.getElementById("pin-modal").classList.remove("hidden");
             document.getElementById("input-security-pin").focus();
@@ -313,17 +314,14 @@
         function submitPinVerification(e) {
             e.preventDefault();
             const typedPin = document.getElementById("input-security-pin").value;
-            if (typedPin === SECURITY_PIN) {
-                closePinModal();
-                if (currentAccessSession.mode === 'add') {
-                    openModal('add');
-                } else if (currentAccessSession.mode === 'delete') {
-                    executeDelete(currentAccessSession.index);
-                }
-            } else {
-                alert("⚠️ PIN Salah! Akses ditolak.");
-                document.getElementById("input-security-pin").value = "";
-                document.getElementById("input-security-pin").focus();
+            
+            currentAccessSession.validatedPin = typedPin;
+            closePinModal();
+            
+            if (currentAccessSession.mode === 'add') {
+                openModal('add');
+            } else if (currentAccessSession.mode === 'delete') {
+                executeDelete(currentAccessSession.index);
             }
         }
 
@@ -486,7 +484,7 @@
             e.preventDefault();
             const payload = {
                 action: "CREATE",
-                rowIndex: null,
+                pin: currentAccessSession.validatedPin, 
                 tanggal: document.getElementById("form-tanggal").value,
                 keterangan: document.getElementById("form-keterangan").value.toUpperCase(),
                 masuk: parseInt(document.getElementById("form-masuk").value) || 0,
@@ -497,23 +495,32 @@
             const statusBadge = document.getElementById("loading-status");
             statusBadge.innerText = "Menyimpan...";
             
-            currentDatabase.push({
-                tanggal: payload.tanggal,
-                keterangan: payload.keterangan,
-                masuk: payload.payload || payload.masuk,
-                keluar: payload.keluar,
-                nota: payload.nota
-            });
-            saveToLocalStorage();
-            renderData(currentDatabase);
-            
             try {
-                await fetch(WEB_APP_URL, {
+                const response = await fetch(WEB_APP_URL, {
                     method: "POST",
-                    mode: "no-cors",
                     headers: { "Content-Type": "text/plain" },
                     body: JSON.stringify(payload)
                 });
+                
+                if(response.ok) {
+                    const resJson = await response.json();
+                    if(resJson.status === "WRONG_PIN") {
+                        alert("⚠️ PIN Salah! Perintah simpan ditolak oleh Server.");
+                        fetchLiveKasData();
+                        return;
+                    }
+                }
+                
+                // Render lokal optimis
+                currentDatabase.push({
+                    tanggal: payload.tanggal,
+                    keterangan: payload.keterangan,
+                    masuk: payload.masuk,
+                    keluar: payload.keluar,
+                    nota: payload.nota
+                });
+                saveToLocalStorage();
+                renderData(currentDatabase);
                 setTimeout(fetchLiveKasData, 1200);
             } catch (error) {
                 setTimeout(fetchLiveKasData, 1500);
@@ -526,26 +533,35 @@
             const statusBadge = document.getElementById("loading-status");
             statusBadge.innerText = "Menghapus...";
             
-            // PAYLOAD UTK HAPUS DATA: Dikirim secara detail mencakup NOTA agar Apps Script bisa memetakan kecocokan data dengan presisi tinggi pada baris Spreadsheet Anda
             const payload = {
                 action: "DELETE",
+                pin: currentAccessSession.validatedPin, 
                 tanggal: targetData.tanggal,
                 keterangan: targetData.keterangan,
                 masuk: parseInt(targetData.masuk) || 0,
                 keluar: parseInt(targetData.keluar) || 0,
                 nota: targetData.nota || ""
             };
-            currentDatabase.splice(index, 1);
-            saveToLocalStorage();
-            renderData(currentDatabase);
             
             try {
-                await fetch(WEB_APP_URL, {
+                const response = await fetch(WEB_APP_URL, {
                     method: "POST",
-                    mode: "no-cors",
                     headers: { "Content-Type": "text/plain" },
                     body: JSON.stringify(payload)
                 });
+                
+                if(response.ok) {
+                    const resJson = await response.json();
+                    if(resJson.status === "WRONG_PIN") {
+                        alert("⚠️ PIN Salah! Perintah hapus ditolak oleh Server.");
+                        fetchLiveKasData();
+                        return;
+                    }
+                }
+                
+                currentDatabase.splice(index, 1);
+                saveToLocalStorage();
+                renderData(currentDatabase);
                 setTimeout(fetchLiveKasData, 1200);
             } catch (error) {
                 setTimeout(fetchLiveKasData, 1500);
