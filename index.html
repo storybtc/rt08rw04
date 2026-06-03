@@ -142,7 +142,7 @@
         </div>
 
         <button onclick="requestAccess('add')" class="w-full bg-[#10b981] hover:bg-[#059669] text-white py-3.5 px-4 rounded-xl transition duration-200 flex items-center justify-center gap-2 shadow-sm tracking-wide text-xs md:text-sm uppercase text-center break-words">
-            <svg xmlns="http://www.w3.org/2000/xl" class="h-4 w-4 text-emerald-100 shrink-0" viewBox="0 0 20 20" fill="currentColor">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-emerald-100 shrink-0" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
             </svg>
             <span class="break-words">INPUT DATA BARU</span>
@@ -188,11 +188,11 @@
                     <div class="grid grid-cols-2 gap-2.5">
                         <div>
                             <label class="text-[9px] text-slate-500 uppercase block mb-1">Nominal Masuk (Rp)</label>
-                            <input type="number" id="form-masuk" value="0" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2 text-xs text-slate-800 focus:outline-none focus:border-[#115e3b]" required>
+                            <input type="number" id="form-masuk" value="0" min="0" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2 text-xs text-slate-800 focus:outline-none focus:border-[#115e3b]" required>
                         </div>
                         <div>
                             <label class="text-[9px] text-slate-500 uppercase block mb-1">Nominal Keluar (Rp)</label>
-                            <input type="number" id="form-keluar" value="0" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2 text-xs text-slate-800 focus:outline-none focus:border-[#115e3b]" required>
+                            <input type="number" id="form-keluar" value="0" min="0" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2 text-xs text-slate-800 focus:outline-none focus:border-[#115e3b]" required>
                         </div>
                     </div>
                     <div>
@@ -307,15 +307,15 @@
 
         function closePinModal() {
             document.getElementById("pin-modal").classList.add("hidden");
+            activeSessionPin = "";
         }
 
         function submitPinVerification(e) {
             e.preventDefault();
-            const typedPin = document.getElementById("input-security-pin").value;
+            const typedPin = document.getElementById("input-security-pin").value.trim();
             
-            if (typedPin.trim() !== "") {
-                activeSessionPin = typedPin; // Setel PIN runtime
-                closePinModal();
+            if (typedPin) {
+                activeSessionPin = typedPin;
                 
                 if (currentAccessSession.mode === 'add') {
                     openModal('add');
@@ -324,6 +324,7 @@
                 } else if (currentAccessSession.mode === 'delete') {
                     executeDelete(currentAccessSession.index);
                 }
+                closePinModal();
             }
         }
 
@@ -344,7 +345,7 @@
             } else if (mode === 'edit' && index !== null) {
                 title.innerText = "Edit Data Kas";
                 const item = currentDatabase[index];
-                document.getElementById("form-id").value = index; // Menyimpan urutan index baris data lama
+                document.getElementById("form-id").value = index;
                 
                 let formattedDate = "";
                 if (item.tanggal) {
@@ -359,7 +360,7 @@
                     }
                 }
                 document.getElementById("form-tanggal").value = formattedDate || new Date().toISOString().split('T')[0];
-                document.getElementById("form-keterangan").value = item.keterangan ? item.keterangan.toString().trim() : "";
+                document.getElementById("form-keterangan").value = item.keterangan || "";
                 document.getElementById("form-masuk").value = item.masuk || 0;
                 document.getElementById("form-keluar").value = item.keluar || 0;
                 document.getElementById("form-nota").value = item.nota || "";
@@ -368,7 +369,7 @@
 
         function closeModal() {
             document.getElementById("transaction-modal").classList.add("hidden");
-            activeSessionPin = ""; // Flush memori PIN runtime demi aspek keamanan
+            activeSessionPin = "";
         }
 
         // --- RENDER COMPONENT KE LAYAR ---
@@ -379,7 +380,6 @@
             let totalMasuk = 0;
             let totalKeluar = 0;
             
-            // Urutkan data dari tanggal terlama ke terbaru agar saldo akumulasi berjalan valid
             rows.sort((a, b) => new Date(a.tanggal) - new Date(b.tanggal));
             
             rows.forEach((item, index) => {
@@ -448,7 +448,6 @@
                 `;
                 container.appendChild(rowContainer);
                 
-                // Sistem Akumulasi Bulan
                 let isEndOfMonth = false;
                 if (index === rows.length - 1) {
                     isEndOfMonth = true;
@@ -492,14 +491,14 @@
                 const response = await fetch(antiCacheUrl);
                 const data = await response.json();
                 
-                currentDatabase = (data && data.length > 0) ? data : [];
+                currentDatabase = (data && Array.isArray(data)) ? data : [];
                 saveToLocalStorage();
                 renderData(currentDatabase);
                 
                 statusBadge.innerText = "Terupdate";
                 statusBadge.className = "text-[10px] text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200";
             } catch (error) {
-                console.error("Gagal sinkronisasi cloud, memuat cadangan lokal.");
+                console.error("Gagal sinkronisasi cloud:", error);
                 renderData(currentDatabase);
                 statusBadge.innerText = "Offline (Lokal)";
                 statusBadge.className = "text-[10px] text-rose-600 bg-rose-50 px-2 py-0.5 rounded-full border border-rose-200";
@@ -515,19 +514,13 @@
             const payload = {
                 pin: activeSessionPin, 
                 action: isEdit ? "UPDATE" : "CREATE",
-                rowIndex: isEdit ? parseInt(formId) : null, // Mengirim urutan baris ke backend GAS
+                rowIndex: isEdit ? parseInt(formId) : null,
                 tanggal: document.getElementById("form-tanggal").value,
-                keterangan: document.getElementById("form-keterangan").value.toString().trim().toUpperCase(),
+                keterangan: document.getElementById("form-keterangan").value.trim().toUpperCase(),
                 masuk: parseInt(document.getElementById("form-masuk").value) || 0,
                 keluar: parseInt(document.getElementById("form-keluar").value) || 0,
-                nota: document.getElementById("form-nota").value.toString().trim()
+                nota: document.getElementById("form-nota").value.trim()
             };
-            
-            if (isEdit) {
-                const oldData = currentDatabase[formId];
-                payload.oldTanggal = oldData.tanggal;
-                payload.oldKeterangan = oldData.keterangan ? oldData.keterangan.toString().trim().toUpperCase() : "";
-            }
             
             closeModal();
             const statusBadge = document.getElementById("loading-status");
@@ -536,15 +529,32 @@
             try {
                 const response = await fetch(WEB_APP_URL, {
                     method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
                     body: JSON.stringify(payload)
                 });
-                const resText = await response.text();
                 
-                if (resText.includes("ERROR")) {
-                     alert(JSON.parse(resText).message || "Akses Ditolak Server!");
+                const resText = await response.text();
+                let resData;
+                
+                try {
+                    resData = JSON.parse(resText);
+                } catch {
+                    resData = { success: false, message: "Respons tidak valid dari server" };
                 }
+                
+                if (!resData.success) {
+                    alert("Gagal: " + (resData.message || "Akses ditolak!"));
+                    statusBadge.innerText = "Gagal";
+                    statusBadge.className = "text-[10px] text-rose-600 bg-rose-50 px-2 py-0.5 rounded-full border border-rose-200";
+                    return;
+                }
+                
                 setTimeout(fetchLiveKasData, 500);
             } catch (error) {
+                console.error("Error menyimpan:", error);
+                alert("Tidak dapat terhubung ke server. Data disimpan sementara di perangkat.");
                 setTimeout(fetchLiveKasData, 1000);
             }
         }
@@ -552,7 +562,16 @@
         // --- PROSES HAPUS DATA ---
         async function executeDelete(index) {
             const targetData = currentDatabase[index];
-            if (!confirm(`Hapus transaksi: "${targetData.keterangan}"?`)) return;
+            if (!targetData) {
+                alert("Data tidak ditemukan!");
+                closePinModal();
+                return;
+            }
+
+            if (!confirm(`Yakin ingin menghapus transaksi:\n"${targetData.keterangan}"?`)) {
+                closePinModal();
+                return;
+            }
             
             const statusBadge = document.getElementById("loading-status");
             statusBadge.innerText = "Menghapus...";
@@ -560,26 +579,44 @@
             const payload = {
                 pin: activeSessionPin, 
                 action: "DELETE",
+                rowIndex: index,
                 tanggal: targetData.tanggal,
-                keterangan: targetData.keterangan ? targetData.keterangan.toString().trim().toUpperCase() : "",
-                masuk: targetData.masuk,
-                keluar: targetData.keluar
+                keterangan: targetData.keterangan || "",
+                masuk: targetData.masuk || 0,
+                keluar: targetData.keluar || 0
             };
             
-            activeSessionPin = ""; // Reset PIN runtime
+            closePinModal();
             
             try {
                 const response = await fetch(WEB_APP_URL, {
                     method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
                     body: JSON.stringify(payload)
                 });
-                const resText = await response.text();
                 
-                if (resText.includes("ERROR")) {
-                     alert(JSON.parse(resText).message || "Akses Ditolak Server!");
+                const resText = await response.text();
+                let resData;
+                
+                try {
+                    resData = JSON.parse(resText);
+                } catch {
+                    resData = { success: false, message: "Respons tidak valid dari server" };
                 }
+                
+                if (!resData.success) {
+                    alert("Gagal hapus: " + (resData.message || "Akses ditolak!"));
+                    statusBadge.innerText = "Gagal";
+                    statusBadge.className = "text-[10px] text-rose-600 bg-rose-50 px-2 py-0.5 rounded-full border border-rose-200";
+                    return;
+                }
+                
                 setTimeout(fetchLiveKasData, 500);
             } catch (error) {
+                console.error("Error hapus:", error);
+                alert("Tidak dapat terhubung ke server.");
                 setTimeout(fetchLiveKasData, 1000);
             }
         }
