@@ -230,14 +230,14 @@
     </div>
 
     <script>
-        // URL Web App Apps Script Hasil Deployment Anda
-        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyNZzzaexA7fB7WalB5JT3FlqJ6eMRV0iXDTAyF_PfKr4YLZh8FBB9_Wnk0H6aAWmdh/exec";
+        // URL Web App Apps Script Baru Anda
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzwYdAuz2J4v5ikvvVHfjQlQwi-a4F5uZwyrKKHKXar4Zc8x3ZKKkABswnkte0IrCee/exec";
         
         let currentDatabase = [];
         let currentAccessSession = { mode: null, index: null };
         let activeSessionPin = ""; // PIN tersimpan sementara di memori runtime
 
-        // --- SISTEM EFEk ANIMASI SALJU ---
+        // --- SISTEM EFEK ANIMASI SALJU ---
         function createSnowflake() {
             const snowChars = ['❄','❅','❆','✻'];
             const snow = document.createElement('div');
@@ -260,23 +260,27 @@
             return "Rp " + new Intl.NumberFormat('id-ID').format(angka);
         }
 
+        // DIPERBAIKI: Fungsi konversi tanggal agar bisa membaca format "Wed Jun 03 2026..."
         function convertDateToUI(dateString) {
             if (!dateString) return "-";
-            if (dateString.includes(" ") && isNaN(dateString)) {
-                const parsedDate = new Date(dateString);
-                if (!isNaN(parsedDate.getTime())) {
-                    const dd = String(parsedDate.getDate()).padStart(2, '0');
-                    const mm = String(parsedDate.getMonth() + 1).padStart(2, '0');
-                    const yyyy = parsedDate.getFullYear();
-                    return `${dd}/${mm}/${yyyy}`;
-                }
+            
+            // Cek jika tanggal adalah string standar JS Date
+            let dateObj = new Date(dateString);
+            if (!isNaN(dateObj.getTime())) {
+                const dd = String(dateObj.getDate()).padStart(2, '0');
+                const mm = String(dateObj.getMonth() + 1).padStart(2, '0');
+                const yyyy = dateObj.getFullYear();
+                return `${dd}/${mm}/${yyyy}`;
             }
+            
+            // Cek format YYYY-MM-DD
             if (dateString.includes("-")) {
                 const parts = dateString.split("T")[0].split("-");
                 if (parts.length === 3) {
                     return `${parts[2]}/${parts[1]}/${parts[0]}`;
                 }
             }
+            
             return dateString;
         }
 
@@ -349,14 +353,12 @@
                 
                 let formattedDate = "";
                 if (item.tanggal) {
-                    if (item.tanggal.includes("T")) {
-                        formattedDate = item.tanggal.split("T")[0];
-                    } else if (item.tanggal.includes("/")) {
-                        const parts = item.tanggal.split("/");
-                        if (parts.length === 3) formattedDate = `${parts[2]}-${parts[1]}-${parts[0]}`;
-                    } else {
-                        const parsedDate = new Date(item.tanggal);
-                        if (!isNaN(parsedDate.getTime())) formattedDate = parsedDate.toISOString().split('T')[0];
+                    const dateObj = new Date(item.tanggal);
+                    if (!isNaN(dateObj.getTime())) {
+                        formattedDate = dateObj.toISOString().split('T')[0];
+                    } else if (item.tanggal.includes("-")) {
+                        const parts = item.tanggal.split("T")[0].split("-");
+                        if (parts.length === 3) formattedDate = `${parts[0]}-${parts[1]}-${parts[2]}`;
                     }
                 }
                 document.getElementById("form-tanggal").value = formattedDate || new Date().toISOString().split('T')[0];
@@ -380,7 +382,12 @@
             let totalMasuk = 0;
             let totalKeluar = 0;
             
-            rows.sort((a, b) => new Date(a.tanggal) - new Date(b.tanggal));
+            // DIPERBAIKI: Sorting tanggal berfungsi meski format dari server adalah string tanggal panjang
+            rows.sort((a, b) => {
+                const dateA = new Date(a.tanggal);
+                const dateB = new Date(b.tanggal);
+                return dateA - dateB;
+            });
             
             rows.forEach((item, index) => {
                 const masuk = parseInt(item.masuk) || 0;
@@ -420,7 +427,7 @@
                     <div class="md:col-span-4 text-slate-700 uppercase leading-tight text-xs md:text-sm flex flex-row md:flex-col items-start justify-start md:justify-center min-w-0 w-full text-left md:pl-4">
                         <span class="md:hidden text-slate-400 uppercase text-[9px] tracking-wider text-left block shrink-0 pt-0.5 select-none pr-1">Keterangan:</span>
                         <div class="flex-1 flex flex-col items-start justify-center text-left min-w-0 md:w-full md:px-0">
-                <span class="text-left break-all whitespace-normal uppercase font-black text-slate-900 text-[13px] md:text-sm block w-full">${item.keterangan}</span>
+                            <span class="text-left break-all whitespace-normal uppercase font-black text-slate-900 text-[13px] md:text-sm block w-full">${item.keterangan}</span>
                             ${notaHtml}
                         </div>
                     </div>
@@ -491,6 +498,7 @@
                 const response = await fetch(antiCacheUrl);
                 const data = await response.json();
                 
+                // DIPERBAIKI: Memastikan data adalah array sebelum diproses
                 currentDatabase = (data && Array.isArray(data)) ? data : [];
                 saveToLocalStorage();
                 renderData(currentDatabase);
@@ -522,7 +530,7 @@
                 nota: document.getElementById("form-nota").value.trim()
             };
 
-            // Khusus untuk Edit: Kirim data lama sebagai cadangan pencocokan di server
+            // Khusus Edit: Kirim data lama sebagai cadangan pencocokan di server
             if (isEdit) {
                 const oldData = currentDatabase[parseInt(formId)];
                 payload.oldTanggal = oldData.tanggal;
