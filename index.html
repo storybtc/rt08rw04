@@ -365,7 +365,6 @@
                 const baseBgRow = index % 2 === 0 ? 'bg-white' : 'bg-slate-50/70';
                 const rowContainer = document.createElement("div");
                 
-                // BERIKUT ADALAH BAGIAN YANG DIUBAH AGAR LEBIH RAPAT DI MODE MOBILE (p-2, py-1, gap-0.5, border-slate-200/60)
                 rowContainer.className = `flex flex-col md:grid md:grid-cols-12 md:items-center p-2 py-1 md:py-2 md:px-2 border border-slate-200/60 md:border-b md:border-x-0 md:border-t-0 rounded-xl md:rounded-none shadow-sm md:shadow-none hover:bg-emerald-50/40 transition gap-0.5 md:gap-0 ${baseBgRow} w-full overflow-hidden`;
                 
                 let notaHtml = "";
@@ -501,7 +500,7 @@
             currentDatabase.push({
                 tanggal: payload.tanggal,
                 keterangan: payload.keterangan,
-                masuk: payload.masuk,
+                masuk: payload.payload || payload.masuk,
                 keluar: payload.keluar,
                 nota: payload.nota
             });
@@ -527,12 +526,14 @@
             const statusBadge = document.getElementById("loading-status");
             statusBadge.innerText = "Menghapus...";
             
+            // PAYLOAD UTK HAPUS DATA: Dikirim secara detail mencakup NOTA agar Apps Script bisa memetakan kecocokan data dengan presisi tinggi pada baris Spreadsheet Anda
             const payload = {
                 action: "DELETE",
                 tanggal: targetData.tanggal,
                 keterangan: targetData.keterangan,
-                masuk: targetData.masuk,
-                keluar: targetData.keluar
+                masuk: parseInt(targetData.masuk) || 0,
+                keluar: parseInt(targetData.keluar) || 0,
+                nota: targetData.nota || ""
             };
             currentDatabase.splice(index, 1);
             saveToLocalStorage();
