@@ -7,94 +7,18 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght=400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        /* Memaksa seluruh teks di dalam aplikasi menggunakan ketebalan bold tebal/tegas */
-        * {
-            font-weight: 900 !important;
-        }
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: #f4f7f5;
-            color: #1e293b;
-            position: relative;
-        }
-        ::-webkit-scrollbar {
-            width: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #115e3b;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #115e3b;
-            border-radius: 3px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #0b3f27;
-        }
-        
-        /* Efek Kedip Radar Sonar Khas Aplikasi Sistem */
-        .radar-pulse {
-            position: relative;
-            width: 8px;
-            height: 8px;
-            background-color: #00FF66;
-            border-radius: 50%;
-            box-shadow: 0 0 8px #00FF66;
-        }
-        .radar-pulse::after {
-            content: '';
-            position: absolute;
-            top: -6px;
-            left: -6px;
-            width: 20px;
-            height: 20px;
-            border: 2px solid #00FF66;
-            border-radius: 50%;
-            opacity: 0;
-            animation: radar-scan 1.8s ease-out infinite;
-        }
-        @keyframes radar-scan {
-            0% {
-                transform: scale(0.4);
-                opacity: 1;
-            }
-            100% {
-                transform: scale(1.4);
-                opacity: 0;
-                box-shadow: 0 0 12px #00FF66;
-            }
-        }
-        
-        /* --- EFEK SALJU CSS --- */
-        .snowflake {
-            color: rgba(255, 255, 255, 0.5);
-            font-size: 1.3em;
-            position: fixed;
-            top: -10%;
-            z-index: 9999;
-            user-select: none;
-            cursor: default;
-            pointer-events: none;
-            animation-name: snowflakes-fall, snowflakes-shake;
-            animation-duration: 26s, 5s;
-            animation-timing-function: linear, ease-in-out;
-            animation-iteration-count: infinite, infinite;
-        }
-        @keyframes snowflakes-fall {
-            0% {
-                top: -10%;
-            }
-            100% {
-                top: 105%;
-            }
-        }
-        @keyframes snowflakes-shake {
-            0%, 100% {
-                transform: translateX(0) rotate(0deg);
-            }
-            50% {
-                transform: translateX(60px) rotate(180deg);
-            }
-        }
+        * { font-weight: 900 !important; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f4f7f5; color: #1e293b; position: relative; }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #115e3b; }
+        ::-webkit-scrollbar-thumb { background: #115e3b; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #0b3f27; }
+        .radar-pulse { position: relative; width: 8px; height: 8px; background-color: #00FF66; border-radius: 50%; box-shadow: 0 0 8px #00FF66; }
+        .radar-pulse::after { content: ''; position: absolute; top: -6px; left: -6px; width: 20px; height: 20px; border: 2px solid #00FF66; border-radius: 50%; opacity: 0; animation: radar-scan 1.8s ease-out infinite; }
+        @keyframes radar-scan { 0% { transform: scale(0.4); opacity: 1; } 100% { transform: scale(1.4); opacity: 0; box-shadow: 0 0 12px #00FF66; } }
+        .snowflake { color: rgba(255, 255, 255, 0.5); font-size: 1.3em; position: fixed; top: -10%; z-index: 9999; user-select: none; cursor: default; pointer-events: none; animation-name: snowflakes-fall, snowflakes-shake; animation-duration: 26s, 5s; animation-timing-function: linear, ease-in-out; animation-iteration-count: infinite, infinite; }
+        @keyframes snowflakes-fall { 0% { top: -10%; } 100% { top: 105%; } }
+        @keyframes snowflakes-shake { 0%, 100% { transform: translateX(0) rotate(0deg); } 50% { transform: translateX(60px) rotate(180deg); } }
     </style>
 </head>
 <body class="min-h-screen py-4 px-3 md:py-6 md:px-8 flex justify-center items-start">
@@ -119,7 +43,7 @@
             <div class="flex-1 flex flex-col items-center justify-center px-2">
                 <div class="flex items-center justify-center gap-2 mb-2">
                     <div class="radar-pulse"></div>
-                    <p class="text-[9px] md:text-[10px] text-[#00FF66] tracking-widest uppercase style-glow" style="text-shadow: 0 0 6px #00FF66, 0 0 12px rgba(0,255,102,0.4);">
+                    <p class="text-[9px] md:text-[10px] text-[#00FF66] tracking-widest uppercase" style="text-shadow: 0 0 6px #00FF66, 0 0 12px rgba(0,255,102,0.4);">
                         SYSTEM ONLINE
                     </p>
                 </div>
@@ -142,10 +66,10 @@
         </div>
 
         <button onclick="requestAccess('add')" class="w-full bg-[#10b981] hover:bg-[#059669] text-white py-3.5 px-4 rounded-xl transition duration-200 flex items-center justify-center gap-2 shadow-sm tracking-wide text-xs md:text-sm uppercase text-center break-words">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-emerald-100 shrink-0" viewBox="0 0 20 20" fill="currentColor">
+            <svg xmlns="http://www.w3.org/2000/xl" class="h-4 w-4 text-emerald-100 shrink-0" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
             </svg>
-            <span class="break-words">INPUT DATA BARU</span>
+            <span>INPUT DATA BARU</span>
         </button>
 
         <div class="bg-white border border-slate-200 rounded-2xl p-3 md:p-6 shadow-sm overflow-hidden">
@@ -188,11 +112,11 @@
                     <div class="grid grid-cols-2 gap-2.5">
                         <div>
                             <label class="text-[9px] text-slate-500 uppercase block mb-1">Nominal Masuk (Rp)</label>
-                            <input type="number" id="form-masuk" value="0" min="0" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2 text-xs text-slate-800 focus:outline-none focus:border-[#115e3b]" required>
+                            <input type="number" id="form-masuk" value="0" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2 text-xs text-slate-800 focus:outline-none focus:border-[#115e3b]" required>
                         </div>
                         <div>
                             <label class="text-[9px] text-slate-500 uppercase block mb-1">Nominal Keluar (Rp)</label>
-                            <input type="number" id="form-keluar" value="0" min="0" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2 text-xs text-slate-800 focus:outline-none focus:border-[#115e3b]" required>
+                            <input type="number" id="form-keluar" value="0" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2 text-xs text-slate-800 focus:outline-none focus:border-[#115e3b]" required>
                         </div>
                     </div>
                     <div>
@@ -222,22 +146,21 @@
                     <input type="password" id="input-security-pin" inputmode="numeric" pattern="[0-9]*" maxlength="6" placeholder="••••••" class="w-full text-center bg-slate-50 border border-slate-300 rounded-xl p-3 text-lg font-black tracking-widest text-slate-800 focus:outline-none focus:border-[#115e3b]" required autocomplete="off">
                 </div>
                 <div class="flex gap-2">
-                    <button type="button" onclick="closePinModal()" class="w-1/2 bg-slate-100 hover:bg-slate-200 text-slate-600 py-2.5 rounded-xl text-xs uppercase tracking-wider break-words">Batal</button>
-                    <button type="submit" class="w-1/2 bg-gradient-to-r from-[#115e3b] to-[#0b3f27] text-white py-2.5 rounded-xl text-xs uppercase tracking-wider break-words">Verifikasi</button>
+                    <button type="button" onclick="closePinModal()" class="w-1/2 bg-slate-100 hover:bg-slate-200 text-slate-600 py-2.5 rounded-xl text-xs uppercase tracking-wider">Batal</button>
+                    <button type="submit" class="w-1/2 bg-gradient-to-r from-[#115e3b] to-[#0b3f27] text-white py-2.5 rounded-xl text-xs uppercase tracking-wider">Verifikasi</button>
                 </div>
             </form>
         </div>
     </div>
 
     <script>
-        // URL Web App Apps Script Baru Anda
-        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzwYdAuz2J4v5ikvvVHfjQlQwi-a4F5uZwyrKKHKXar4Zc8x3ZKKkABswnkte0IrCee/exec";
+        // URL Apps Script Terbaru Milik Anda
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyZKRaHfPAzQq6LMB2jEvrMALJvyTHaq1JvF8TjQ4jOQfc0j7Kj1CvvIdEmQ7ziDNV9/exec";
         
         let currentDatabase = [];
-        let currentAccessSession = { mode: null, index: null };
-        let activeSessionPin = ""; // PIN tersimpan sementara di memori runtime
+        let currentAccessSession = { mode: null, dataId: null };
+        let activeSessionPin = ""; 
 
-        // --- SISTEM EFEK ANIMASI SALJU ---
         function createSnowflake() {
             const snowChars = ['❄','❅','❆','✻'];
             const snow = document.createElement('div');
@@ -250,37 +173,16 @@
             const container = document.getElementById('snow-container');
             if (container) container.appendChild(snow);
         }
+        for (let i = 0; i < 12; i++) { createSnowflake(); }
 
-        for (let i = 0; i < 12; i++) {
-            createSnowflake();
-        }
+        function formatRupiah(angka) { return "Rp " + new Intl.NumberFormat('id-ID').format(angka); }
 
-        // --- FORMATTER & DATE UTILITIES ---
-        function formatRupiah(angka) {
-            return "Rp " + new Intl.NumberFormat('id-ID').format(angka);
-        }
-
-        // DIPERBAIKI: Fungsi konversi tanggal agar bisa membaca format "Wed Jun 03 2026..."
         function convertDateToUI(dateString) {
             if (!dateString) return "-";
-            
-            // Cek jika tanggal adalah string standar JS Date
-            let dateObj = new Date(dateString);
-            if (!isNaN(dateObj.getTime())) {
-                const dd = String(dateObj.getDate()).padStart(2, '0');
-                const mm = String(dateObj.getMonth() + 1).padStart(2, '0');
-                const yyyy = dateObj.getFullYear();
-                return `${dd}/${mm}/${yyyy}`;
-            }
-            
-            // Cek format YYYY-MM-DD
             if (dateString.includes("-")) {
                 const parts = dateString.split("T")[0].split("-");
-                if (parts.length === 3) {
-                    return `${parts[2]}/${parts[1]}/${parts[0]}`;
-                }
+                if (parts.length === 3) return `${parts[2]}/${parts[1]}/${parts[0]}`;
             }
-            
             return dateString;
         }
 
@@ -290,50 +192,36 @@
             return !isNaN(date.getTime()) ? `${namaBulan[date.getMonth()]} ${date.getFullYear()}` : "-";
         }
 
-        // --- LOCAL STORAGE BACKUP CHIPS ---
-        function saveToLocalStorage() {
-            localStorage.setItem("KAS_RT_DATABASE", JSON.stringify(currentDatabase));
-        }
+        function saveToLocalStorage() { localStorage.setItem("KAS_RT_DATABASE", JSON.stringify(currentDatabase)); }
+        function loadFromLocalStorage() { const localData = localStorage.getItem("KAS_RT_DATABASE"); if (localData) currentDatabase = JSON.parse(localData); }
 
-        function loadFromLocalStorage() {
-            const localData = localStorage.getItem("KAS_RT_DATABASE");
-            if (localData) currentDatabase = JSON.parse(localData);
-        }
-
-        // --- MANAGEMEN AKSI AKSES PIN ---
-        function requestAccess(mode, index = null) {
+        function requestAccess(mode, dataId = null) {
             currentAccessSession.mode = mode;
-            currentAccessSession.index = index;
+            currentAccessSession.dataId = dataId;
             document.getElementById("input-security-pin").value = "";
             document.getElementById("pin-modal").classList.remove("hidden");
             document.getElementById("input-security-pin").focus();
         }
 
-        function closePinModal() {
-            document.getElementById("pin-modal").classList.add("hidden");
-            activeSessionPin = "";
-        }
+        function closePinModal() { document.getElementById("pin-modal").classList.add("hidden"); }
 
         function submitPinVerification(e) {
             e.preventDefault();
-            const typedPin = document.getElementById("input-security-pin").value.trim();
-            
-            if (typedPin) {
+            const typedPin = document.getElementById("input-security-pin").value;
+            if (typedPin.trim() !== "") {
                 activeSessionPin = typedPin;
-                
+                closePinModal();
                 if (currentAccessSession.mode === 'add') {
                     openModal('add');
                 } else if (currentAccessSession.mode === 'edit') {
-                    openModal('edit', currentAccessSession.index);
+                    openModal('edit', currentAccessSession.dataId);
                 } else if (currentAccessSession.mode === 'delete') {
-                    executeDelete(currentAccessSession.index);
+                    executeDelete(currentAccessSession.dataId);
                 }
-                closePinModal();
             }
         }
 
-        // --- MANAJEMEN WINDOW MODAL TRANSAKSI ---
-        function openModal(mode, index = null) {
+        function openModal(mode, dataId = null) {
             const modal = document.getElementById("transaction-modal");
             const title = document.getElementById("modal-title");
             const form = document.getElementById("transaction-form");
@@ -346,23 +234,14 @@
                 document.getElementById("form-masuk").value = "0";
                 document.getElementById("form-keluar").value = "0";
                 document.getElementById("form-tanggal").value = new Date().toISOString().split('T')[0];
-            } else if (mode === 'edit' && index !== null) {
+            } else if (mode === 'edit' && dataId !== null) {
                 title.innerText = "Edit Data Kas";
-                const item = currentDatabase[index];
-                document.getElementById("form-id").value = index;
+                const item = currentDatabase.find(x => x.dataId === dataId);
+                if(!item) return closeModal();
                 
-                let formattedDate = "";
-                if (item.tanggal) {
-                    const dateObj = new Date(item.tanggal);
-                    if (!isNaN(dateObj.getTime())) {
-                        formattedDate = dateObj.toISOString().split('T')[0];
-                    } else if (item.tanggal.includes("-")) {
-                        const parts = item.tanggal.split("T")[0].split("-");
-                        if (parts.length === 3) formattedDate = `${parts[0]}-${parts[1]}-${parts[2]}`;
-                    }
-                }
-                document.getElementById("form-tanggal").value = formattedDate || new Date().toISOString().split('T')[0];
-                document.getElementById("form-keterangan").value = item.keterangan || "";
+                document.getElementById("form-id").value = dataId;
+                document.getElementById("form-tanggal").value = item.tanggal;
+                document.getElementById("form-keterangan").value = item.keterangan.toString().trim();
                 document.getElementById("form-masuk").value = item.masuk || 0;
                 document.getElementById("form-keluar").value = item.keluar || 0;
                 document.getElementById("form-nota").value = item.nota || "";
@@ -371,10 +250,9 @@
 
         function closeModal() {
             document.getElementById("transaction-modal").classList.add("hidden");
-            activeSessionPin = "";
+            activeSessionPin = ""; 
         }
 
-        // --- RENDER COMPONENT KE LAYAR ---
         function renderData(rows) {
             const container = document.getElementById("mutasi-list");
             container.innerHTML = "";
@@ -382,12 +260,13 @@
             let totalMasuk = 0;
             let totalKeluar = 0;
             
-            // DIPERBAIKI: Sorting tanggal berfungsi meski format dari server adalah string tanggal panjang
-            rows.sort((a, b) => {
-                const dateA = new Date(a.tanggal);
-                const dateB = new Date(b.tanggal);
-                return dateA - dateB;
+            // Membuat dataId unik berdasarkan urutan data asli (Sebelum disortir)
+            rows.forEach((item, originalIdx) => {
+                item.dataId = "ID_" + originalIdx + "_" + item.masuk + "_" + item.keluar;
             });
+
+            // Urutkan data berdasarkan urutan tanggal kalender
+            rows.sort((a, b) => new Date(a.tanggal) - new Date(b.tanggal));
             
             rows.forEach((item, index) => {
                 const masuk = parseInt(item.masuk) || 0;
@@ -404,7 +283,7 @@
                 if (item.nota && item.nota.trim() !== "") {
                     notaHtml = `
                         <div class="w-full flex justify-start text-left mt-1.5 md:mt-1 md:px-0">
-                            <a href="${item.nota}" target="_blank" class="text-[11px] text-blue-600 hover:text-blue-800 bg-[#e8f0fe] hover:bg-blue-100 px-2 py-0.5 rounded-md inline-flex items-center transition-colors tracking-wide text-left uppercase whitespace-nowrap font-black select-none">
+                            <a href="${item.nota}" target="_blank" class="text-[11px] text-blue-600 bg-[#e8f0fe] px-2 py-0.5 rounded-md inline-flex items-center font-black uppercase">
                                 Lihat Foto Nota
                             </a>
                         </div>`;
@@ -412,43 +291,43 @@
                 
                 rowContainer.innerHTML = `
                     <div class="flex justify-between items-center md:col-span-1 text-slate-500 text-[11px] md:text-sm border-b border-dashed border-slate-100 md:border-0 pb-1 md:pb-0 shrink-0 gap-2">
-                        <span class="md:hidden text-slate-400 uppercase text-[9px] shrink-0">Tanggal:</span>
-                        <span class="break-words whitespace-normal text-right md:text-left font-black">${convertDateToUI(item.tanggal)}</span>
-                        <div class="flex items-center gap-1.5 md:hidden shrink-0">
-                            <button onclick="requestAccess('edit', ${index})" class="text-amber-500 hover:text-amber-700 p-1 bg-amber-50 rounded shrink-0" title="Edit">
+                        <span class="md:hidden text-slate-400 text-[9px]">Tanggal:</span>
+                        <span class="font-black">${convertDateToUI(item.tanggal)}</span>
+                        <div class="flex items-center gap-1.5 md:hidden">
+                            <button onclick="requestAccess('edit', '${item.dataId}')" class="text-amber-500 p-1 bg-amber-50 rounded">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>
                             </button>
-                            <button onclick="requestAccess('delete', ${index})" class="text-rose-500 hover:text-rose-700 p-1 bg-rose-50 rounded shrink-0" title="Hapus">
+                            <button onclick="requestAccess('delete', '${item.dataId}')" class="text-rose-500 p-1 bg-rose-50 rounded">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
                             </button>
                         </div>
                     </div>
                     
-                    <div class="md:col-span-4 text-slate-700 uppercase leading-tight text-xs md:text-sm flex flex-row md:flex-col items-start justify-start md:justify-center min-w-0 w-full text-left md:pl-4">
-                        <span class="md:hidden text-slate-400 uppercase text-[9px] tracking-wider text-left block shrink-0 pt-0.5 select-none pr-1">Keterangan:</span>
-                        <div class="flex-1 flex flex-col items-start justify-center text-left min-w-0 md:w-full md:px-0">
-                            <span class="text-left break-all whitespace-normal uppercase font-black text-slate-900 text-[13px] md:text-sm block w-full">${item.keterangan}</span>
+                    <div class="md:col-span-4 text-slate-700 uppercase flex flex-row md:flex-col items-start justify-start md:justify-center w-full text-left md:pl-4">
+                        <span class="md:hidden text-slate-400 text-[9px] pr-1">Keterangan:</span>
+                        <div class="flex-1 flex flex-col items-start justify-center min-w-0 md:w-full">
+                            <span class="break-all font-black text-slate-900 text-[13px] md:text-sm block w-full">${item.keterangan}</span>
                             ${notaHtml}
                         </div>
                     </div>
                     
-                    <div class="md:col-span-2 md:text-right text-[#10b981] text-xs md:text-sm flex justify-between md:justify-end md:pr-4 min-w-0 flex-1 w-full gap-2">
-                        <span class="md:hidden text-slate-400 uppercase text-[9px] shrink-0">Masuk (+):</span>
-                        <span class="break-words whitespace-normal text-right font-black">${masuk > 0 ? formatRupiah(masuk) : "-"}</span>
+                    <div class="md:col-span-2 md:text-right text-[#10b981] text-xs md:text-sm flex justify-between md:justify-end md:pr-4 w-full gap-2">
+                        <span class="md:hidden text-slate-400 text-[9px]">Masuk (+):</span>
+                        <span class="font-black">${masuk > 0 ? formatRupiah(masuk) : "-"}</span>
                     </div>
-                    <div class="md:col-span-2 md:text-right text-[#ef4444] text-xs md:text-sm flex justify-between md:justify-end md:pr-4 min-w-0 flex-1 w-full gap-2">
-                        <span class="md:hidden text-slate-400 uppercase text-[9px] shrink-0">Keluar (-):</span>
-                        <span class="break-words whitespace-normal text-right font-black">${keluar > 0 ? formatRupiah(keluar) : "-"}</span>
+                    <div class="md:col-span-2 md:text-right text-[#ef4444] text-xs md:text-sm flex justify-between md:justify-end md:pr-4 w-full gap-2">
+                        <span class="md:hidden text-slate-400 text-[9px]">Keluar (-):</span>
+                        <span class="font-black">${keluar > 0 ? formatRupiah(keluar) : "-"}</span>
                     </div>
-                    <div class="md:col-span-2 md:text-right text-blue-600 text-xs md:text-sm flex justify-between md:justify-end md:pr-4 bg-blue-50/70 md:bg-transparent p-1.5 md:p-0 rounded-lg min-w-0 flex-1 w-full gap-2 items-center">
-                        <span class="md:hidden text-slate-500 uppercase text-[9px] shrink-0">Saldo Akhir:</span>
-                        <span class="break-words whitespace-normal text-right font-black text-sm md:text-sm">${formatRupiah(runningSaldo)}</span>
+                    <div class="md:col-span-2 md:text-right text-blue-600 text-xs md:text-sm flex justify-between md:justify-end md:pr-4 bg-blue-50/70 md:bg-transparent p-1.5 md:p-0 rounded-lg w-full gap-2 items-center">
+                        <span class="md:hidden text-slate-500 text-[9px]">Saldo:</span>
+                        <span class="font-black text-sm">${formatRupiah(runningSaldo)}</span>
                     </div>
-                    <div class="hidden md:flex md:col-span-1 justify-center items-center gap-1.5 shrink-0">
-                        <button onclick="requestAccess('edit', ${index})" class="text-amber-500 hover:text-amber-600 transition p-1" title="Edit">
+                    <div class="hidden md:flex md:col-span-1 justify-center items-center gap-1.5">
+                        <button onclick="requestAccess('edit', '${item.dataId}')" class="text-amber-500 p-1" title="Edit">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>
                         </button>
-                        <button onclick="requestAccess('delete', ${index})" class="text-rose-500 hover:text-rose-600 transition p-1" title="Hapus">
+                        <button onclick="requestAccess('delete', '${item.dataId}')" class="text-rose-500 p-1" title="Hapus">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
                         </button>
                     </div>
@@ -468,14 +347,12 @@
                 
                 if (isEndOfMonth) {
                     const rekapDiv = document.createElement("div");
-                    rekapDiv.className = "flex flex-col md:grid md:grid-cols-12 md:items-center py-2 px-4 my-2 bg-[#115e3b] text-white rounded-xl border border-emerald-800 shadow-sm text-[11px] md:text-xs tracking-wide uppercase w-full text-center gap-0 md:gap-0 overflow-hidden";
+                    rekapDiv.className = "flex flex-col md:grid md:grid-cols-12 md:items-center py-2 px-4 my-2 bg-[#115e3b] text-white rounded-xl border border-emerald-800 shadow-sm text-[11px] md:text-xs tracking-wide uppercase w-full text-center gap-0 overflow-hidden";
                     rekapDiv.innerHTML = `
-                        <div class="md:contents flex flex-col items-center justify-center gap-0 w-full">
-                            <div class="md:col-span-5 font-black normal-case md:px-4 text-center md:text-left break-words w-full">AKUMULASI SALDO BULAN ${getNamaBulan(item.tanggal)}</div>
-                            <div class="hidden md:block md:col-span-1 shrink-0"></div>
-                            <div class="hidden md:block md:col-span-2 shrink-0"></div>
-                            <div class="hidden md:block md:col-span-2 shrink-0"></div>
-                            <div class="md:col-span-2 md:text-right font-black normal-case md:pr-4 shrink-0 text-2xl md:text-lg md:text-white w-full text-center break-words">${formatRupiah(runningSaldo)}</div>
+                        <div class="md:contents flex flex-col items-center justify-center w-full">
+                            <div class="md:col-span-5 font-black text-center md:text-left w-full">AKUMULASI SALDO BULAN ${getNamaBulan(item.tanggal)}</div>
+                            <div class="hidden md:block md:col-span-5"></div>
+                            <div class="md:col-span-2 md:text-right font-black text-2xl md:text-lg w-full text-center break-words">${formatRupiah(runningSaldo)}</div>
                         </div>
                     `;
                     container.appendChild(rekapDiv);
@@ -487,33 +364,26 @@
             document.getElementById("total-pengeluaran").innerText = formatRupiah(totalKeluar);
         }
 
-        // --- AMBIL DATA DARI CLOUD ---
         async function fetchLiveKasData() {
             const statusBadge = document.getElementById("loading-status");
             statusBadge.innerText = "Sinkronisasi...";
             statusBadge.className = "text-[10px] text-amber-600 bg-amber-50 px-2 py-0.5 rounded-full animate-pulse border border-amber-200";
-            
             try {
                 const antiCacheUrl = `${WEB_APP_URL}?_cb=${new Date().getTime()}`;
                 const response = await fetch(antiCacheUrl);
                 const data = await response.json();
-                
-                // DIPERBAIKI: Memastikan data adalah array sebelum diproses
-                currentDatabase = (data && Array.isArray(data)) ? data : [];
+                currentDatabase = (data && data.length > 0) ? data : [];
                 saveToLocalStorage();
                 renderData(currentDatabase);
-                
                 statusBadge.innerText = "Terupdate";
                 statusBadge.className = "text-[10px] text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200";
             } catch (error) {
-                console.error("Gagal sinkronisasi cloud:", error);
                 renderData(currentDatabase);
                 statusBadge.innerText = "Offline (Lokal)";
                 statusBadge.className = "text-[10px] text-rose-600 bg-rose-50 px-2 py-0.5 rounded-full border border-rose-200";
             }
         }
 
-        // --- SUBMIT INPUT / EDIT DATA ---
         async function handleFormSubmit(e) {
             e.preventDefault();
             const formId = document.getElementById("form-id").value;
@@ -522,110 +392,60 @@
             const payload = {
                 pin: activeSessionPin, 
                 action: isEdit ? "UPDATE" : "CREATE",
-                rowIndex: isEdit ? parseInt(formId) : null,
                 tanggal: document.getElementById("form-tanggal").value,
-                keterangan: document.getElementById("form-keterangan").value.trim().toUpperCase(),
+                keterangan: document.getElementById("form-keterangan").value.toString().trim().toUpperCase(),
                 masuk: parseInt(document.getElementById("form-masuk").value) || 0,
                 keluar: parseInt(document.getElementById("form-keluar").value) || 0,
-                nota: document.getElementById("form-nota").value.trim()
+                nota: document.getElementById("form-nota").value.toString().trim()
             };
-
-            // Khusus Edit: Kirim data lama sebagai cadangan pencocokan di server
+            
             if (isEdit) {
-                const oldData = currentDatabase[parseInt(formId)];
-                payload.oldTanggal = oldData.tanggal;
-                payload.oldKeterangan = oldData.keterangan;
+                const oldData = currentDatabase.find(x => x.dataId === formId);
+                if(oldData) {
+                    payload.oldTanggal = oldData.tanggal;
+                    payload.oldKeterangan = oldData.keterangan.toString().trim().toUpperCase();
+                }
             }
             
             closeModal();
-            const statusBadge = document.getElementById("loading-status");
-            statusBadge.innerText = "Menyimpan...";
+            document.getElementById("loading-status").innerText = "Menyimpan...";
             
             try {
-                const response = await fetch(WEB_APP_URL, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify(payload)
-                });
-                
-                const resData = await response.json();
-                
-                if (resData.status === "ERROR") {
-                    alert("❌ " + resData.message);
-                    statusBadge.innerText = "Gagal";
-                    statusBadge.className = "text-[10px] text-rose-600 bg-rose-50 px-2 py-0.5 rounded-full border border-rose-200";
-                    return;
-                }
-                
+                const response = await fetch(WEB_APP_URL, { method: "POST", body: JSON.stringify(payload) });
+                const resText = await response.text();
+                if (resText.includes("ERROR")) { alert(JSON.parse(resText).message || "Akses Ditolak Server!"); }
                 setTimeout(fetchLiveKasData, 500);
             } catch (error) {
-                console.error("Error menyimpan:", error);
-                alert("⚠️ Tidak dapat terhubung ke server. Data disimpan sementara di perangkat.");
                 setTimeout(fetchLiveKasData, 1000);
             }
         }
 
-        // --- PROSES HAPUS DATA ---
-        async function executeDelete(index) {
-            const targetData = currentDatabase[index];
-            if (!targetData) {
-                alert("Data tidak ditemukan!");
-                closePinModal();
-                return;
-            }
-
-            if (!confirm(`Yakin ingin menghapus transaksi:\n"${targetData.keterangan}"?`)) {
-                closePinModal();
-                return;
-            }
+        async function executeDelete(dataId) {
+            const targetData = currentDatabase.find(x => x.dataId === dataId);
+            if (!targetData || !confirm(`Hapus transaksi: "${targetData.keterangan}"?`)) return;
             
-            const statusBadge = document.getElementById("loading-status");
-            statusBadge.innerText = "Menghapus...";
-            
+            document.getElementById("loading-status").innerText = "Menghapus...";
             const payload = {
                 pin: activeSessionPin, 
                 action: "DELETE",
-                // Parameter yang dibutuhkan fungsi deleteData di server Anda
                 tanggal: targetData.tanggal,
-                keterangan: targetData.keterangan,
+                keterangan: targetData.keterangan.toString().trim().toUpperCase(),
                 masuk: targetData.masuk,
                 keluar: targetData.keluar
             };
-            
-            closePinModal();
+            activeSessionPin = ""; 
             
             try {
-                const response = await fetch(WEB_APP_URL, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify(payload)
-                });
-                
-                const resData = await response.json();
-                
-                if (resData.status === "ERROR") {
-                    alert("❌ " + resData.message);
-                    statusBadge.innerText = "Gagal";
-                    statusBadge.className = "text-[10px] text-rose-600 bg-rose-50 px-2 py-0.5 rounded-full border border-rose-200";
-                    return;
-                }
-                
+                const response = await fetch(WEB_APP_URL, { method: "POST", body: JSON.stringify(payload) });
+                const resText = await response.text();
+                if (resText.includes("ERROR")) { alert(JSON.parse(resText).message || "Akses Ditolak Server!"); }
                 setTimeout(fetchLiveKasData, 500);
             } catch (error) {
-                console.error("Error hapus:", error);
-                alert("⚠️ Tidak dapat terhubung ke server.");
                 setTimeout(fetchLiveKasData, 1000);
             }
         }
 
-        window.addEventListener("DOMContentLoaded", () => {
-            loadFromLocalStorage();
-            fetchLiveKasData();
-        });
+        window.addEventListener("DOMContentLoaded", () => { loadFromLocalStorage(); fetchLiveKasData(); });
     </script>
 </body>
 </html>
