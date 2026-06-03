@@ -235,7 +235,7 @@
         
         let currentDatabase = [];
         let currentAccessSession = { mode: null, index: null };
-        let activeSessionPin = ""; // PIN runtime temporer, tidak ada hardcode teks statis rahasia di sini!
+        let activeSessionPin = ""; // PIN runtime temporer, aman dari inspect element
 
         // --- SISTEM SALJU ---
         function createSnowflake() {
@@ -305,6 +305,7 @@
             document.getElementById("input-security-pin").focus();
         }
 
+        // Menghapus jendela pin modal
         function closePinModal() {
             document.getElementById("pin-modal").classList.add("hidden");
         }
@@ -359,7 +360,7 @@
                     }
                 }
                 document.getElementById("form-tanggal").value = formattedDate || new Date().toISOString().split('T')[0];
-                document.getElementById("form-keterangan").value = item.keterangan || "";
+                document.getElementById("form-keterangan").value = item.keterangan ? item.keterangan.toString().trim() : "";
                 document.getElementById("form-masuk").value = item.masuk || 0;
                 document.getElementById("form-keluar").value = item.keluar || 0;
                 document.getElementById("form-nota").value = item.nota || "";
@@ -516,16 +517,16 @@
                 action: isEdit ? "UPDATE" : "CREATE",
                 rowIndex: isEdit ? parseInt(formId) : null,
                 tanggal: document.getElementById("form-tanggal").value,
-                keterangan: document.getElementById("form-keterangan").value.toUpperCase(),
+                keterangan: document.getElementById("form-keterangan").value.toString().trim().toUpperCase(),
                 masuk: parseInt(document.getElementById("form-masuk").value) || 0,
                 keluar: parseInt(document.getElementById("form-keluar").value) || 0,
-                nota: document.getElementById("form-nota").value
+                nota: document.getElementById("form-nota").value.toString().trim()
             };
             
             if (isEdit) {
                 const oldData = currentDatabase[formId];
                 payload.oldTanggal = oldData.tanggal;
-                payload.oldKeterangan = oldData.keterangan;
+                payload.oldKeterangan = oldData.keterangan ? oldData.keterangan.toString().trim().toUpperCase() : "";
             }
             
             closeModal();
@@ -561,7 +562,7 @@
                 pin: activeSessionPin, // Sertakan PIN runtime untuk verifikasi backend
                 action: "DELETE",
                 tanggal: targetData.tanggal,
-                keterangan: targetData.keterangan,
+                keterangan: targetData.keterangan ? targetData.keterangan.toString().trim().toUpperCase() : "",
                 masuk: targetData.masuk,
                 keluar: targetData.keluar
             };
