@@ -404,7 +404,7 @@
                         <span class="md:hidden text-slate-400 uppercase text-[9px] shrink-0">Keluar (-):</span>
                         <span class="break-words whitespace-normal text-right font-black">${keluar > 0 ? formatRupiah(keluar) : "-"}</span>
                     </div>
-                    <div class="md:col-span-2 md:text-right text-blue-600 md:text-emerald-700 text-xs md:text-sm flex justify-between md:justify-end md:pr-4 bg-blue-50/70 md:bg-transparent p-1.5 md:p-0 rounded-lg min-w-0 flex-1 w-full gap-2 items-center">
+                    <div class="md:col-span-2 md:text-right text-blue-600 md:text-blue-600 text-xs md:text-sm flex justify-between md:justify-end md:pr-4 bg-blue-50/70 md:bg-transparent p-1.5 md:p-0 rounded-lg min-w-0 flex-1 w-full gap-2 items-center">
                         <span class="md:hidden text-slate-500 uppercase text-[9px] shrink-0">Saldo Akhir:</span>
                         <span class="break-words whitespace-normal text-right font-black text-sm md:text-sm">${formatRupiah(runningSaldo)}</span>
                     </div>
@@ -429,15 +429,14 @@
                 
                 if (isEndOfMonth) {
                     const rekapDiv = document.createElement("div");
-                    // Teks font akumulasi "AKUMULASI SALDO BULAN..." tetap menggunakan ukuran semula (text-[11px] / text-xs), hanya nominal angbka rupiah saja yang diperbesar khusus mode mobile lewat class text-2xl
-                    rekapDiv.className = "flex flex-col md:grid md:grid-cols-12 md:items-center py-4 px-4 my-2 bg-[#115e3b] text-white rounded-xl border border-emerald-800 shadow-sm text-[11px] md:text-xs tracking-wide uppercase w-full text-center gap-1 md:gap-0 overflow-hidden";
+                    rekapDiv.className = "flex flex-col md:grid md:grid-cols-12 md:items-center py-2 px-4 my-2 bg-[#115e3b] text-white rounded-xl border border-emerald-800 shadow-sm text-[11px] md:text-xs tracking-wide uppercase w-full text-center gap-0 md:gap-0 overflow-hidden";
                     rekapDiv.innerHTML = `
-                        <div class="md:contents flex flex-col items-center justify-center gap-1 w-full">
+                        <div class="md:contents flex flex-col items-center justify-center gap-0 w-full">
                             <div class="md:col-span-5 font-black normal-case md:px-4 text-center md:text-left break-words w-full">AKUMULASI SALDO BULAN ${getNamaBulan(item.tanggal)}</div>
                             <div class="hidden md:block md:col-span-1 shrink-0"></div>
                             <div class="hidden md:block md:col-span-2 shrink-0"></div>
                             <div class="hidden md:block md:col-span-2 shrink-0"></div>
-                            <div class="md:col-span-2 md:text-right font-black normal-case md:pr-4 shrink-0 text-2xl md:text-lg font-black w-full text-center break-words">${formatRupiah(runningSaldo)}</div>
+                            <div class="md:col-span-2 md:text-right font-black normal-case md:pr-4 shrink-0 text-2xl md:text-lg md:text-white font-black w-full text-center break-words">${formatRupiah(runningSaldo)}</div>
                         </div>
                     `;
                     container.appendChild(rekapDiv);
