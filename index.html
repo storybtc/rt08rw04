@@ -66,7 +66,7 @@
         </div>
 
         <button onclick="requestAccess('add')" class="w-full bg-[#10b981] hover:bg-[#059669] text-white py-3.5 px-4 rounded-xl transition duration-200 flex items-center justify-center gap-2 shadow-sm tracking-wide text-xs md:text-sm uppercase text-center break-words">
-            <svg xmlns="http://www.w3.org/2000/xl" class="h-4 w-4 text-emerald-100 shrink-0" viewBox="0 0 20 20" fill="currentColor">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-emerald-100 shrink-0" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
             </svg>
             <span>INPUT DATA BARU</span>
@@ -377,12 +377,12 @@
                 
                 if (isEndOfMonth) {
                     const rekapDiv = document.createElement("div");
-                    rekapDiv.className = "flex flex-col md:grid md:grid-cols-12 md:items-center py-0.5 px-4 my-1 bg-[#115e3b] text-white rounded-xl border border-emerald-800 shadow-sm tracking-wide uppercase w-full text-center gap-0 overflow-hidden";
+                    rekapDiv.className = "flex flex-col md:grid md:grid-cols-12 md:items-center py-1 px-3 my-1.5 bg-[#115e3b] text-white rounded-lg border border-emerald-800 shadow-sm tracking-wide uppercase w-full text-center gap-0 overflow-hidden";
                     rekapDiv.innerHTML = `
                         <div class="md:contents flex flex-col items-center justify-center w-full">
-                            <div class="md:col-span-5 font-black text-center md:text-left w-full text-[11px] md:text-xs">AKUMULASI SALDO BULAN ${getNamaBulan(item.tanggal)}</div>
+                            <div class="md:col-span-5 font-black text-center md:text-left w-full text-[9px] md:text-[10px] opacity-90">SALDO AKHIR BULAN ${getNamaBulan(item.tanggal)}</div>
                             <div class="hidden md:block md:col-span-5"></div>
-                            <div class="md:col-span-2 md:text-right font-black text-xl md:text-lg w-full text-center break-words">${formatRupiah(runningSaldo)}</div>
+                            <div class="md:col-span-2 md:text-right font-black text-base md:text-xl w-full text-center break-words">${formatRupiah(runningSaldo)}</div>
                         </div>
                     `;
                     container.appendChild(rekapDiv);
