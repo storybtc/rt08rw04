@@ -27,14 +27,14 @@
 
     <div class="w-full max-w-6xl flex flex-col gap-4 relative z-10">
         
-        <div class="bg-gradient-to-r from-[#0d4a2a] via-[#106b3c] to-[#1da25a] text-center py-5 md:py-6 rounded-[28px] shadow-md px-4 flex flex-col gap-1 justify-center items-center overflow-hidden border border-emerald-900/20">
-            <h1 class="text-[#00FF66] text-[3.8vw] md:text-[2.2vw] tracking-wider uppercase font-black block w-full text-center whitespace-nowrap px-2 drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]">
+        <div class="bg-gradient-to-r from-[#0d4a2a] via-[#106b3c] to-[#1da25a] text-center py-4 md:py-6 rounded-[28px] shadow-md px-4 flex flex-col gap-1 justify-center items-center overflow-hidden border border-emerald-900/20">
+            <h1 class="text-[#00FF66] text-[4.5vw] md:text-[2.2vw] tracking-wider uppercase font-black block w-full text-center whitespace-nowrap px-2 drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]">
                 LAPORAN KAS RT 08 RW 04, BAKALAN LOR
             </h1>
-            <p class="text-white text-[2.7vw] md:text-[1.1vw] tracking-widest uppercase font-bold leading-normal mt-1 block w-full text-center whitespace-nowrap px-2 drop-shadow-[0_1px_2px_rgba(0,0,0,0.3)]">
+            <p class="text-white text-[3vw] md:text-[1.1vw] tracking-widest uppercase font-bold leading-normal mt-0.5 block w-full text-center whitespace-nowrap px-2 drop-shadow-[0_1px_2px_rgba(0,0,0,0.3)]">
                 RT 08 : BP. PURNOMO | RW 04 : BP. KATENO
             </p>
-            <div class="text-[#00FF66] text-[2.5vw] md:text-[0.9vw] font-black tracking-widest leading-relaxed max-w-2xl mx-auto mt-1 text-center uppercase whitespace-nowrap px-2" style="text-shadow: 0 0 4px rgba(0,255,102,0.3);">
+            <div class="text-[#00FF66] text-[2.8vw] md:text-[0.9vw] font-black tracking-widest leading-relaxed max-w-2xl mx-auto mt-0.5 text-center uppercase whitespace-nowrap px-2" style="text-shadow: 0 0 4px rgba(0,255,102,0.3);">
                 LAPORAN KAS RT.08 DIGITAL SYSTEM
             </div>
         </div>
@@ -176,7 +176,6 @@
 
         function formatRupiah(angka) { return "Rp " + new Intl.NumberFormat('id-ID').format(angka); }
 
-        // Helper Frontend: Memastikan string tanggal dari database dikonversi ke format DD/MM/YYYY yang rapi
         function formatToDMYString(dateInput) {
             if (!dateInput) return "";
             let date = new Date(dateInput);
@@ -378,12 +377,12 @@
                 
                 if (isEndOfMonth) {
                     const rekapDiv = document.createElement("div");
-                    rekapDiv.className = "flex flex-col md:grid md:grid-cols-12 md:items-center py-2 px-4 my-2 bg-[#115e3b] text-white rounded-xl border border-emerald-800 shadow-sm text-[11px] md:text-xs tracking-wide uppercase w-full text-center gap-0 overflow-hidden";
+                    rekapDiv.className = "flex flex-col md:grid md:grid-cols-12 md:items-center py-2 px-4 my-2 bg-[#115e3b] text-white rounded-xl border border-emerald-800 shadow-sm tracking-wide uppercase w-full text-center gap-0 overflow-hidden";
                     rekapDiv.innerHTML = `
                         <div class="md:contents flex flex-col items-center justify-center w-full">
-                            <div class="md:col-span-5 font-black text-center md:text-left w-full">AKUMULASI SALDO BULAN ${getNamaBulan(item.tanggal)}</div>
+                            <div class="md:col-span-5 font-black text-center md:text-left w-full text-[11px] md:text-xs">AKUMULASI SALDO BULAN ${getNamaBulan(item.tanggal)}</div>
                             <div class="hidden md:block md:col-span-5"></div>
-                            <div class="md:col-span-2 md:text-right font-black text-2xl md:text-lg w-full text-center break-words">${formatRupiah(runningSaldo)}</div>
+                            <div class="md:col-span-2 md:text-right font-black text-xl md:text-lg w-full text-center break-words">${formatRupiah(runningSaldo)}</div>
                         </div>
                     `;
                     container.appendChild(rekapDiv);
