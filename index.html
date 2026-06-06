@@ -19,6 +19,10 @@
         .snowflake { color: rgba(255, 255, 255, 0.5); font-size: 1.3em; position: fixed; top: -10%; z-index: 9999; user-select: none; cursor: default; pointer-events: none; animation-name: snowflakes-fall, snowflakes-shake; animation-duration: 26s, 5s; animation-timing-function: linear, ease-in-out; animation-iteration-count: infinite, infinite; }
         @keyframes snowflakes-fall { 0% { top: -10%; } 100% { top: 105%; } }
         @keyframes snowflakes-shake { 0%, 100% { transform: translateX(0) rotate(0deg); } 50% { transform: translateX(60px) rotate(180deg); } }
+        
+        /* Animasi Popover Menu Aksi Global */
+        .action-popover { animation: popIn 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
+        @keyframes popIn { 0% { transform: scale(0.9) translateY(5px); opacity: 0; } 100% { transform: scale(1) translateY(0); opacity: 1; } }
     </style>
 </head>
 <body class="min-h-screen py-4 px-3 md:py-6 md:px-8 flex justify-center items-start">
@@ -79,13 +83,13 @@
             </div>
             
             <div class="w-full overflow-hidden">
+                <!-- Grid diubah menjadi total grid-cols-12 tanpa sisa kolom opsi (2 + 4 + 2 + 2 + 2 = 12) -->
                 <div class="grid grid-cols-12 text-[1.6vw] md:text-xs text-slate-500 uppercase border-b border-slate-200 pb-2 mb-1 tracking-wider bg-slate-50 p-1 md:p-2 text-center w-full">
                     <div class="col-span-2 text-left pl-1">TANGGAL</div>
                     <div class="col-span-4 text-left px-1">KETERANGAN</div>
                     <div class="col-span-2 text-right pr-1">MASUK</div>
                     <div class="col-span-2 text-right pr-1">KELUAR</div>
                     <div class="col-span-2 text-right pr-1 md:pr-4">SALDO</div>
-                    <div class="hidden md:block col-span-1 text-center">OPSI</div>
                 </div>
                 
                 <div id="mutasi-list" class="flex flex-col w-full"></div>
@@ -95,6 +99,19 @@
         <div class="text-center py-1">
             <p class="text-[9px] md:text-xs tracking-widest text-slate-400 uppercase break-words">POWERED BY : ARADIGITECHINCOME</p>
         </div>
+    </div>
+
+    <!-- Floating Action Popover Universal (Muncul saat tekan tahan di hp / pc) -->
+    <div id="mobile-action-menu" class="hidden fixed z-50 bg-slate-900 text-white rounded-xl shadow-xl border border-slate-700 px-3 py-2 flex items-center gap-4 action-popover">
+        <button id="mobile-btn-edit" class="flex items-center gap-1.5 text-amber-400 text-xs uppercase font-black tracking-wider hover:opacity-80">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>
+            <span>Edit</span>
+        </button>
+        <div class="w-[1px] h-4 bg-slate-700"></div>
+        <button id="mobile-btn-delete" class="flex items-center gap-1.5 text-rose-500 text-xs uppercase font-black tracking-wider hover:opacity-80">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+            <span>Hapus</span>
+        </button>
     </div>
 
     <div id="transaction-modal" class="hidden fixed inset-0 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4 z-50">
@@ -161,6 +178,7 @@
         let currentDatabase = [];
         let currentAccessSession = { mode: null, dataId: null };
         let activeSessionPin = ""; 
+        let longPressTimer = null;
 
         function createSnowflake() {
             const snowChars = ['❄','❅','❆','✻'];
@@ -201,9 +219,9 @@
             return new Date(dmyString);
         }
 
-        function formatRupiahMutasi(angka) {
+        function formatRupiahMutasi(angka, type) {
             if (angka === 0 || !angka) {
-                return `<span class="text-rose-500 font-bold">-</span>`;
+                return `<span class="hidden md:inline text-rose-500 font-bold">-</span><span class="inline md:hidden"></span>`;
             }
             return "Rp " + new Intl.NumberFormat('id-ID').format(angka);
         }
@@ -228,6 +246,7 @@
         function loadFromLocalStorage() { const localData = localStorage.getItem("KAS_RT_DATABASE"); if (localData) currentDatabase = JSON.parse(localData); }
 
         function requestAccess(mode, dataId = null) {
+            hideMobileActionMenu();
             currentAccessSession.mode = mode;
             currentAccessSession.dataId = dataId;
             document.getElementById("input-security-pin").value = "";
@@ -289,6 +308,61 @@
             activeSessionPin = ""; 
         }
 
+        /* Handler Long Press Universal (Mobile & Desktop) */
+        function setupLongPress(element, dataId) {
+            // Mobile Touch Events
+            element.addEventListener('touchstart', (e) => {
+                longPressTimer = setTimeout(() => {
+                    showMobileActionMenu(e.touches[0].clientX, e.touches[0].clientY, dataId);
+                }, 2000);
+            }, { passive: true });
+
+            element.addEventListener('touchend', () => clearTimeout(longPressTimer));
+            element.addEventListener('touchmove', () => clearTimeout(longPressTimer));
+
+            // Desktop Mouse Events
+            element.addEventListener('mousedown', (e) => {
+                // Hanya aktifkan jika menggunakan klik kiri utama
+                if(e.button !== 0) return;
+                longPressTimer = setTimeout(() => {
+                    showMobileActionMenu(e.clientX, e.clientY, dataId);
+                }, 2000);
+            });
+
+            element.addEventListener('mouseup', () => clearTimeout(longPressTimer));
+            element.addEventListener('mouseleave', () => clearTimeout(longPressTimer));
+        }
+
+        function showMobileActionMenu(x, y, dataId) {
+            const menu = document.getElementById("mobile-action-menu");
+            menu.classList.remove("hidden");
+            
+            let menuWidth = 150; 
+            let posX = x - (menuWidth / 2);
+            let posY = y - 55; 
+
+            if(posX < 10) posX = 10;
+            if(posX + menuWidth > window.innerWidth) posX = window.innerWidth - menuWidth - 10;
+            if(posY < 10) posY = y + 20;
+
+            menu.style.left = `${posX}px`;
+            menu.style.top = `${posY}px`;
+
+            document.getElementById("mobile-btn-edit").onclick = () => requestAccess('edit', dataId);
+            document.getElementById("mobile-btn-delete").onclick = () => requestAccess('delete', dataId);
+        }
+
+        function hideMobileActionMenu() {
+            document.getElementById("mobile-action-menu").classList.add("hidden");
+        }
+
+        document.addEventListener('click', (e) => {
+            const menu = document.getElementById("mobile-action-menu");
+            if (!menu.contains(e.target) && !e.target.closest('.keterangan-col')) {
+                hideMobileActionMenu();
+            }
+        });
+
         function renderData(rows) {
             const container = document.getElementById("mutasi-list");
             container.innerHTML = "";
@@ -312,7 +386,7 @@
                 const baseBgRow = index % 2 === 0 ? 'bg-white' : 'bg-slate-50/50';
                 const rowContainer = document.createElement("div");
                 
-                // Kunci Kencang: Menggunakan font responsif text-[1.6vw] md:text-xs untuk jaminan 1 baris utuh di mobile
+                // Grid layout diseragamkan tanpa sisa kolom opsi
                 rowContainer.className = `grid grid-cols-12 items-center py-2.5 border-b border-slate-100 text-[1.6vw] md:text-xs w-full tracking-tighter md:tracking-normal ${baseBgRow}`;
                 
                 let notaHtml = "";
@@ -332,33 +406,27 @@
                 rowContainer.innerHTML = `
                     <div class="col-span-2 text-left pl-1 font-bold text-slate-600 whitespace-nowrap">${displayTanggal}</div>
                     
-                    <div class="col-span-4 text-left px-1">
+                    <div class="col-span-4 text-left px-1 keterangan-col select-none cursor-pointer" id="ket-${item.dataId}">
                         <span class="break-words font-black text-slate-900 block leading-tight uppercase">${item.keterangan}</span>
                         ${notaHtml}
                     </div>
                     
                     <div class="col-span-2 flex justify-end font-black ${colorMasuk} whitespace-nowrap pr-1">
-                        ${formatRupiahMutasi(masuk)}
+                        ${formatRupiahMutasi(masuk, 'masuk')}
                     </div>
                     
                     <div class="col-span-2 flex justify-end font-black ${colorKeluar} whitespace-nowrap pr-1">
-                        ${keluar > 0 ? `<span class="text-slate-400 font-normal mr-0.5">-</span>${formatRupiahMutasi(keluar)}` : formatRupiahMutasi(keluar)}
+                        ${keluar > 0 ? `<span class="text-slate-400 font-normal mr-0.5 md:inline hidden">-</span>${formatRupiahMutasi(keluar, 'keluar')}` : formatRupiahMutasi(keluar, 'keluar')}
                     </div>
                     
                     <div class="col-span-2 flex justify-end font-black text-blue-600 whitespace-nowrap pr-1 md:pr-4">
                         ${formatRupiah(runningSaldo)}
                     </div>
-                    
-                    <div class="hidden md:flex md:col-span-1 justify-center items-center gap-1 px-0.5">
-                        <button onclick="requestAccess('edit', '${item.dataId}')" class="text-amber-500 p-0" title="Edit">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="md:h-3.5 md:w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>
-                        </button>
-                        <button onclick="requestAccess('delete', '${item.dataId}')" class="text-rose-500 p-0" title="Hapus">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="md:h-3.5 md:w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
-                        </button>
-                    </div>
                 `;
                 container.appendChild(rowContainer);
+                
+                const ketElement = container.querySelector(`#ket-${item.dataId}`);
+                setupLongPress(ketElement, item.dataId);
                 
                 let isEndOfMonth = false;
                 if (index === rows.length - 1) {
